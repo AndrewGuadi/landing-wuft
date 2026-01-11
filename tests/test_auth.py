@@ -12,7 +12,12 @@ def app():
     db_fd, db_path = tempfile.mkstemp()
     os.close(db_fd)
     app = create_app()
-    app.config.update(TESTING=True, AUTH_DB_PATH=db_path, SECRET_KEY="test-secret")
+    app.config.update(
+        TESTING=True,
+        AUTH_DB_PATH=db_path,
+        SECRET_KEY="test-secret",
+        ALLOW_PUBLIC_REGISTRATION=True,
+    )
     with app.app_context():
         init_auth_db(app)
     yield app

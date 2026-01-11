@@ -31,6 +31,8 @@ def login():
 
 @auth_bp.route("/register", methods=["POST"])
 def register():
+    if not current_app.config.get("ALLOW_PUBLIC_REGISTRATION", False):
+        return jsonify({"status": "error", "message": "Registration is disabled."}), 403
     payload = request.get_json(silent=True) or {}
     errors = _validate_credentials(payload)
     if errors:
