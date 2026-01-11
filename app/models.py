@@ -15,6 +15,7 @@ class SponsorshipApplication(db.Model):
     linkedin = db.Column(db.String(255))
     support_level = db.Column(db.String(50))
     logo_filename = db.Column(db.String(255))
+    status = db.Column(db.String(50), default="new", nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
 
@@ -57,6 +58,7 @@ class FoodVendorApplication(db.Model):
     initials = db.Column(db.String(20))
     logo_filename = db.Column(db.String(255))
     insurance_filename = db.Column(db.String(255))
+    status = db.Column(db.String(50), default="new", nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
 
@@ -66,4 +68,5 @@ class LiabilityApplication(db.Model):
     applicant_full_name = db.Column(db.String(255), nullable=False)
     company_name = db.Column(db.String(255))
     application_date = db.Column(db.String(50))
+    status = db.Column(db.String(50), default="new", nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
