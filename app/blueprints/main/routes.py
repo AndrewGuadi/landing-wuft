@@ -1,4 +1,17 @@
-from flask import Blueprint, current_app, flash, jsonify, redirect, render_template, request, url_for
+import os
+
+from flask import (
+    Blueprint,
+    abort,
+    current_app,
+    flash,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+    url_for,
+)
 from flask_login import current_user, login_required, login_user, logout_user
 
 from app.extensions import db
@@ -7,11 +20,7 @@ from app.forms import (
     LiabilityApplicationForm,
     SponsorshipApplicationForm,
 )
-from app.models import (
-    FoodVendorApplication,
-    LiabilityApplication,
-    SponsorshipApplication,
-)
+from app.models import FoodVendorApplication, LiabilityApplication, SponsorshipApplication
 from app.services.notifications import send_placeholder_email
 from app.services.uploads import save_uploaded_file
 from app.services.auth_store import authenticate_user
@@ -81,8 +90,11 @@ def food_vendor_application():
             company_name=form.company_name.data,
             application_date=form.application_date.data,
             initials=form.initials.data,
+            signature_signed_at=db.func.now(),
+            signature_ip=request.remote_addr,
             logo_filename=logo_filename,
             insurance_filename=insurance_filename,
+            payment_status="pending",
         )
         db.session.add(application)
         db.session.commit()
@@ -108,6 +120,7 @@ def sponsorship_application():
             linkedin=form.linkedin.data,
             support_level=form.support_level.data,
             logo_filename=logo_filename,
+            payment_status="pending",
         )
         db.session.add(application)
         db.session.commit()
@@ -126,6 +139,8 @@ def liability_application():
             applicant_full_name=form.applicant_full_name.data,
             company_name=form.company_name.data,
             application_date=form.application_date.data,
+            signature_signed_at=db.func.now(),
+            signature_ip=request.remote_addr,
         )
         db.session.add(application)
         db.session.commit()
@@ -200,6 +215,44 @@ def admin_dashboard():
         vendors=vendors,
         liabilities=liabilities,
     )
+
+
+@main_bp.get("/admin/application/<string:application_type>/<int:application_id>")
+@login_required
+def admin_application_detail(application_type: str, application_id: int):
+    model_map = {
+        "sponsor": SponsorshipApplication,
+        "vendor": FoodVendorApplication,
+        "liability": LiabilityApplication,
+    }
+    application = model_map.get(application_type)
+    if not application:
+        flash("Unknown application type.", "error")
+        return redirect(url_for("main.admin_dashboard"))
+
+    application_record = application.query.get_or_404(application_id)
+    return render_template(
+        "admin-application-detail.html",
+        application_type=application_type,
+        application=application_record,
+        return_url=url_for(
+            "main.admin_dashboard",
+            type=request.args.get("type", "all"),
+            status=request.args.get("status", "all"),
+        ),
+    )
+
+
+@main_bp.get("/admin/uploads/<string:category>/<path:filename>")
+@login_required
+def admin_upload_download(category: str, filename: str):
+    allowed_categories = {"food-vendor", "sponsorship"}
+    if category not in allowed_categories:
+        abort(404)
+
+    upload_root = current_app.config["UPLOAD_FOLDER"]
+    directory = os.path.join(upload_root, category)
+    return send_from_directory(directory, filename, as_attachment=True)
 
 
 @main_bp.post("/admin/status/<string:application_type>/<int:application_id>")

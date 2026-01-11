@@ -1,0 +1,298 @@
+{% extends "base.html" %}
+
+{% block title %}Application Detail - Wish Upon a Food Truck Festival{% endblock %}
+
+{% block head %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "blue-deep": "#084B70",
+                        "yellow-star": "#FAC04D",
+                    },
+                },
+            },
+        };
+    </script>
+{% endblock %}
+
+{% block body_class %}bg-slate-50 text-slate-900 font-sans min-h-screen{% endblock %}
+
+{% block content %}
+    <div class="max-w-5xl mx-auto px-6 py-10 space-y-8">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <p class="text-sm text-slate-500 uppercase tracking-wide">Application Detail</p>
+                <h1 class="text-3xl font-bold text-blue-deep">
+                    {% if application_type == "sponsor" %}
+                        Sponsor Application
+                    {% elif application_type == "vendor" %}
+                        Food Vendor Application
+                    {% else %}
+                        Liability Release
+                    {% endif %}
+                </h1>
+            </div>
+            <a href="{{ return_url }}" class="inline-flex items-center gap-2 text-blue-deep font-semibold hover:underline">
+                ← Back to dashboard
+            </a>
+        </div>
+
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h2 class="text-lg font-semibold text-slate-800">Primary Contact</h2>
+                    <dl class="mt-3 space-y-2 text-sm">
+                        {% if application_type != "liability" %}
+                            <div>
+                                <dt class="text-slate-500">Business Name</dt>
+                                <dd class="font-semibold text-slate-900">{{ application.business_name }}</dd>
+                            </div>
+                            <div>
+                                <dt class="text-slate-500">Contact Name</dt>
+                                <dd>{{ application.contact_name }}</dd>
+                            </div>
+                            <div>
+                                <dt class="text-slate-500">Email</dt>
+                                <dd>{{ application.email }}</dd>
+                            </div>
+                            <div>
+                                <dt class="text-slate-500">Cell Phone</dt>
+                                <dd>{{ application.cell_phone }}</dd>
+                            </div>
+                        {% else %}
+                            <div>
+                                <dt class="text-slate-500">Applicant Name</dt>
+                                <dd class="font-semibold text-slate-900">{{ application.applicant_full_name }}</dd>
+                            </div>
+                            <div>
+                                <dt class="text-slate-500">Company</dt>
+                                <dd>{{ application.company_name or "-" }}</dd>
+                            </div>
+                        {% endif %}
+                    </dl>
+                </div>
+
+                <div>
+                    <h2 class="text-lg font-semibold text-slate-800">Status</h2>
+                    <dl class="mt-3 space-y-2 text-sm">
+                        <div>
+                            <dt class="text-slate-500">Application Status</dt>
+                            <dd class="font-semibold text-slate-900">{{ application.status }}</dd>
+                        </div>
+                        {% if application_type != "liability" %}
+                            <div>
+                                <dt class="text-slate-500">Payment Status</dt>
+                                <dd class="font-semibold text-slate-900">{{ application.payment_status }}</dd>
+                            </div>
+                        {% endif %}
+                        <div>
+                            <dt class="text-slate-500">Submitted</dt>
+                            <dd>{{ application.created_at.strftime("%B %d, %Y %I:%M %p") if application.created_at else "-" }}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+
+            {% if application_type != "liability" %}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-base font-semibold text-slate-800">Address & Social</h3>
+                        <dl class="mt-3 space-y-2 text-sm">
+                            <div>
+                                <dt class="text-slate-500">Address</dt>
+                                <dd>{{ application.address or "-" }}</dd>
+                            </div>
+                            <div>
+                                <dt class="text-slate-500">Facebook</dt>
+                                <dd>{{ application.facebook or "-" }}</dd>
+                            </div>
+                            <div>
+                                <dt class="text-slate-500">Instagram</dt>
+                                <dd>{{ application.instagram or "-" }}</dd>
+                            </div>
+                            <div>
+                                <dt class="text-slate-500">LinkedIn</dt>
+                                <dd>{{ application.linkedin or "-" }}</dd>
+                            </div>
+                        </dl>
+                    </div>
+
+                    <div>
+                        <h3 class="text-base font-semibold text-slate-800">Uploads</h3>
+                        <dl class="mt-3 space-y-2 text-sm">
+                            {% if application_type == "sponsor" %}
+                                <div>
+                                    <dt class="text-slate-500">Logo</dt>
+                                    <dd>
+                                        {% if application.logo_filename %}
+                                            <a class="text-blue-deep font-semibold hover:underline" href="{{ url_for('main.admin_upload_download', category='sponsorship', filename=application.logo_filename) }}">Download logo</a>
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </dd>
+                                </div>
+                            {% else %}
+                                <div>
+                                    <dt class="text-slate-500">Logo</dt>
+                                    <dd>
+                                        {% if application.logo_filename %}
+                                            <a class="text-blue-deep font-semibold hover:underline" href="{{ url_for('main.admin_upload_download', category='food-vendor', filename=application.logo_filename) }}">Download logo</a>
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </dd>
+                                </div>
+                                <div>
+                                    <dt class="text-slate-500">Insurance Certificate</dt>
+                                    <dd>
+                                        {% if application.insurance_filename %}
+                                            <a class="text-blue-deep font-semibold hover:underline" href="{{ url_for('main.admin_upload_download', category='food-vendor', filename=application.insurance_filename) }}">Download insurance</a>
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </dd>
+                                </div>
+                            {% endif %}
+                        </dl>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+
+        {% if application_type == "sponsor" %}
+            <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <h2 class="text-lg font-semibold text-slate-800">Sponsorship Details</h2>
+                <dl class="mt-4 space-y-2 text-sm">
+                    <div>
+                        <dt class="text-slate-500">Support Level</dt>
+                        <dd class="font-semibold">{{ application.support_level or "-" }}</dd>
+                    </div>
+                </dl>
+            </section>
+        {% elif application_type == "vendor" %}
+            <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 space-y-6">
+                <div>
+                    <h2 class="text-lg font-semibold text-slate-800">Vehicle & Operations</h2>
+                    <dl class="mt-4 space-y-2 text-sm">
+                        <div>
+                            <dt class="text-slate-500">Service Window Location</dt>
+                            <dd>{{ application.service_window_location or "-" }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-slate-500">Vehicle</dt>
+                            <dd>{{ application.vehicle_make_model or "-" }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-slate-500">Vehicle Year</dt>
+                            <dd>{{ application.vehicle_year or "-" }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-slate-500">Insurance Policy Number</dt>
+                            <dd>{{ application.insurance_policy_number or "-" }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-slate-500">Driver's License</dt>
+                            <dd>{{ application.drivers_license or "-" }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-slate-500">State Issued ID</dt>
+                            <dd>{{ application.state_issued_id or "-" }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-slate-500">Additional Vehicles</dt>
+                            <dd>{{ application.additional_vehicle_count if application.additional_vehicle_count is not none else "-" }}</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <div>
+                    <h2 class="text-lg font-semibold text-slate-800">Payment Methods</h2>
+                    <ul class="mt-3 text-sm text-slate-700 list-disc list-inside">
+                        {% if application.payment_cash %}<li>Cash</li>{% endif %}
+                        {% if application.payment_debit %}<li>Debit</li>{% endif %}
+                        {% if application.payment_visa %}<li>Visa</li>{% endif %}
+                        {% if application.payment_mastercard %}<li>MasterCard</li>{% endif %}
+                        {% if application.payment_amex %}<li>Amex</li>{% endif %}
+                        {% if application.payment_discover %}<li>Discover</li>{% endif %}
+                        {% if application.payment_other %}<li>{{ application.payment_other }}</li>{% endif %}
+                        {% if not (application.payment_cash or application.payment_debit or application.payment_visa or application.payment_mastercard or application.payment_amex or application.payment_discover or application.payment_other) %}
+                            <li>-</li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div>
+                    <h2 class="text-lg font-semibold text-slate-800">Menu Items</h2>
+                    <ul class="mt-3 text-sm text-slate-700 list-disc list-inside">
+                        {% for item in [application.menu_item_1, application.menu_item_2, application.menu_item_3, application.menu_item_4, application.menu_item_5, application.menu_item_6, application.menu_item_7, application.menu_item_8] %}
+                            {% if item %}
+                                <li>{{ item }}</li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if not (application.menu_item_1 or application.menu_item_2 or application.menu_item_3 or application.menu_item_4 or application.menu_item_5 or application.menu_item_6 or application.menu_item_7 or application.menu_item_8) %}
+                            <li>-</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </section>
+        {% endif %}
+
+        {% if application_type != "sponsor" %}
+            <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                <h2 class="text-lg font-semibold text-slate-800">Signature & Liability Details</h2>
+                <dl class="mt-4 space-y-2 text-sm">
+                    {% if application_type == "vendor" %}
+                        <div>
+                            <dt class="text-slate-500">Applicant Signature</dt>
+                            <dd class="font-semibold">{{ application.applicant_signature }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-slate-500">Applicant Full Name</dt>
+                            <dd>{{ application.applicant_full_name }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-slate-500">Company Name</dt>
+                            <dd>{{ application.company_name or "-" }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-slate-500">Application Date</dt>
+                            <dd>{{ application.application_date or "-" }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-slate-500">Initials</dt>
+                            <dd>{{ application.initials or "-" }}</dd>
+                        </div>
+                    {% else %}
+                        <div>
+                            <dt class="text-slate-500">Applicant Signature</dt>
+                            <dd class="font-semibold">{{ application.applicant_signature }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-slate-500">Applicant Full Name</dt>
+                            <dd>{{ application.applicant_full_name }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-slate-500">Company Name</dt>
+                            <dd>{{ application.company_name or "-" }}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-slate-500">Application Date</dt>
+                            <dd>{{ application.application_date or "-" }}</dd>
+                        </div>
+                    {% endif %}
+                    <div>
+                        <dt class="text-slate-500">Signature Timestamp (UTC)</dt>
+                        <dd>{{ application.signature_signed_at.strftime("%B %d, %Y %I:%M %p") if application.signature_signed_at else "-" }}</dd>
+                    </div>
+                    <div>
+                        <dt class="text-slate-500">Signature IP Address</dt>
+                        <dd>{{ application.signature_ip or "-" }}</dd>
+                    </div>
+                </dl>
+            </section>
+        {% endif %}
+    </div>
+{% endblock %}
