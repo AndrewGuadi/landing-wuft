@@ -1,0 +1,64 @@
+from datetime import datetime
+
+from .extensions import db
+
+
+class SponsorshipApplication(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    business_name = db.Column(db.String(255), nullable=False)
+    contact_name = db.Column(db.String(255), nullable=False)
+    cell_phone = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    address = db.Column(db.String(255))
+    facebook = db.Column(db.String(255))
+    instagram = db.Column(db.String(255))
+    linkedin = db.Column(db.String(255))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+
+class FoodVendorApplication(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    business_name = db.Column(db.String(255), nullable=False)
+    contact_name = db.Column(db.String(255), nullable=False)
+    cell_phone = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    address = db.Column(db.String(255))
+    facebook = db.Column(db.String(255))
+    instagram = db.Column(db.String(255))
+    linkedin = db.Column(db.String(255))
+    service_window_location = db.Column(db.String(50))
+    vehicle_make_model = db.Column(db.String(255))
+    vehicle_year = db.Column(db.String(50))
+    insurance_policy_number = db.Column(db.String(255))
+    drivers_license = db.Column(db.String(255))
+    additional_vehicle_count = db.Column(db.Integer)
+    payment_cash = db.Column(db.Boolean, default=False, nullable=False)
+    payment_debit = db.Column(db.Boolean, default=False, nullable=False)
+    payment_visa = db.Column(db.Boolean, default=False, nullable=False)
+    payment_mastercard = db.Column(db.Boolean, default=False, nullable=False)
+    payment_amex = db.Column(db.Boolean, default=False, nullable=False)
+    payment_discover = db.Column(db.Boolean, default=False, nullable=False)
+    payment_other = db.Column(db.String(255))
+    menu_item_1 = db.Column(db.String(255))
+    menu_item_2 = db.Column(db.String(255))
+    menu_item_3 = db.Column(db.String(255))
+    menu_item_4 = db.Column(db.String(255))
+    menu_item_5 = db.Column(db.String(255))
+    menu_item_6 = db.Column(db.String(255))
+    menu_item_7 = db.Column(db.String(255))
+    menu_item_8 = db.Column(db.String(255))
+    applicant_signature = db.Column(db.String(255))
+    applicant_full_name = db.Column(db.String(255))
+    company_name = db.Column(db.String(255))
+    application_date = db.Column(db.String(50))
+    initials = db.Column(db.String(20))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+
+class LiabilityApplication(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    applicant_signature = db.Column(db.String(255), nullable=False)
+    applicant_full_name = db.Column(db.String(255), nullable=False)
+    company_name = db.Column(db.String(255))
+    application_date = db.Column(db.String(50))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)

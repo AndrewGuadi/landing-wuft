@@ -6,6 +6,7 @@ from .blueprints.auth import auth_bp
 from .blueprints.main import main_bp
 from .config import Config
 from .services.auth_store import get_user_by_id, init_auth_db
+from .extensions import db
 
 
 def create_app() -> Flask:
@@ -20,9 +21,13 @@ def create_app() -> Flask:
         return get_user_by_id(app, user_id)
 
     init_auth_db(app)
+    db.init_app(app)
 
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(api_bp)
+
+    with app.app_context():
+        db.create_all()
 
     return app
