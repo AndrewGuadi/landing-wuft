@@ -9,6 +9,7 @@ class Config:
     UPLOAD_FOLDER = os.getenv(
         "UPLOAD_FOLDER", os.path.join(os.path.dirname(__file__), "uploads")
     )
+    ALLOW_PUBLIC_REGISTRATION = os.getenv("ALLOW_PUBLIC_REGISTRATION", "false").lower() == "true"
     STRIPE_API_KEY = os.getenv("STRIPE_API_KEY", "")
     STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")
     TEAMS_WEBHOOK_URL = os.getenv("TEAMS_WEBHOOK_URL", "")
