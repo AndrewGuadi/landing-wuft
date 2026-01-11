@@ -1,6 +1,7 @@
-Flask==3.0.2
-Flask-SQLAlchemy==3.1.1
-Flask-WTF==1.2.1
-requests==2.32.3
-sendgrid==6.11.0
-stripe==10.10.0
+Flask
+Flask-SQLAlchemy
+Flask-WTF
+requests
+sendgrid
+stripe
+python-dotenv
