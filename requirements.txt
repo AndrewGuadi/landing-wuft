@@ -8,3 +8,4 @@ requests
 sendgrid
 stripe
 python-dotenv
+email_validator

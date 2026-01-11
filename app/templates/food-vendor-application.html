@@ -197,19 +197,22 @@
 
                 <div>
                     <label class="block text-base font-bold text-gray-900 mb-3">Service Window Location:</label>
+                    
+                    {% set locations = form.service_window_location | list %}
+                    
                     <div class="flex flex-wrap gap-6">
                         <label class="flex items-center gap-2 cursor-pointer">
-                            {{ form.service_window_location[0](class="sr-only") }}
+                            {{ locations[0](class="sr-only") }}
                             <span class="w-6 h-6 rounded-full bg-yellow-star block"></span>
                             <span class="font-bold text-gray-800">Driver’s Side</span>
                         </label>
                         <label class="flex items-center gap-2 cursor-pointer">
-                            {{ form.service_window_location[1](class="sr-only") }}
+                            {{ locations[1](class="sr-only") }}
                             <span class="w-6 h-6 rounded-full bg-red-btn block"></span>
                             <span class="font-bold text-gray-800">Passenger’s Side</span>
                         </label>
                         <label class="flex items-center gap-2 cursor-pointer">
-                            {{ form.service_window_location[2](class="sr-only") }}
+                            {{ locations[2](class="sr-only") }}
                             <span class="w-6 h-6 rounded-full bg-blue-deep block"></span>
                             <span class="font-bold text-gray-800">Back of Truck</span>
                         </label>
