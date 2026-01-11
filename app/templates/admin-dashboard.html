@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Wish Upon a Food Truck Festival{% endblock %}
+
+{% block head %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "blue-deep": "#084B70",
+                        "yellow-star": "#FAC04D",
+                    },
+                },
+            },
+        };
+    </script>
+{% endblock %}
+
+{% block body_class %}bg-slate-50 text-slate-900 font-sans min-h-screen{% endblock %}
+
+{% block content %}
+    <div class="flex flex-col lg:flex-row min-h-[80vh]">
+        <aside class="w-full lg:w-72 bg-white border-r border-slate-200 p-6 space-y-6">
+            <div>
+                <h2 class="text-lg font-bold text-blue-deep">Dashboard</h2>
+                <p class="text-sm text-slate-500">Filter and review applications.</p>
+            </div>
+
+            <div>
+                <h3 class="text-sm font-semibold text-slate-700 mb-3">Application Types</h3>
+                <nav class="space-y-2">
+                    {% set type_options = [
+                        ("all", "All Applications"),
+                        ("sponsor", "Sponsors"),
+                        ("vendor", "Food Vendors"),
+                        ("liability", "Liability Releases"),
+                    ] %}
+                    {% for type_value, type_label in type_options %}
+                        <a href="{{ url_for('main.admin_dashboard', type=type_value, status=selected_status) }}"
+                           class="block px-4 py-2 rounded-lg text-sm font-medium {% if selected_type == type_value %}bg-blue-deep text-white{% else %}text-slate-600 hover:bg-slate-100{% endif %}">
+                            {{ type_label }}
+                        </a>
+                    {% endfor %}
+                </nav>
+            </div>
+
+            <div>
+                <h3 class="text-sm font-semibold text-slate-700 mb-3">Status Filters</h3>
+                <nav class="space-y-2">
+                    {% set status_options = [
+                        ("all", "All Statuses"),
+                        ("new", "New"),
+                        ("in_review", "In Review"),
+                        ("approved", "Approved"),
+                        ("rejected", "Rejected"),
+                    ] %}
+                    {% for status_value, status_label in status_options %}
+                        <a href="{{ url_for('main.admin_dashboard', type=selected_type, status=status_value) }}"
+                           class="block px-4 py-2 rounded-lg text-sm font-medium {% if selected_status == status_value %}bg-yellow-star text-blue-deep{% else %}text-slate-600 hover:bg-slate-100{% endif %}">
+                            {{ status_label }}
+                        </a>
+                    {% endfor %}
+                </nav>
+            </div>
+
+            <div class="pt-4 border-t border-slate-200">
+                <a href="{{ url_for('main.admin_logout') }}" class="text-sm font-semibold text-red-600 hover:text-red-700">Log out</a>
+            </div>
+        </aside>
+
+        <main class="flex-1 p-6 lg:p-10 space-y-10">
+            <header class="flex flex-col gap-2">
+                <h1 class="text-3xl font-bold text-blue-deep">Application Overview</h1>
+                <p class="text-slate-500">Use the sidebar to switch views and update statuses.</p>
+            </header>
+
+            {% if sponsorships %}
+                <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                    <h2 class="text-xl font-bold mb-4">Sponsor Applications</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm">
+                            <thead class="text-left text-slate-500">
+                                <tr>
+                                    <th class="py-2 pr-4">Business</th>
+                                    <th class="py-2 pr-4">Contact</th>
+                                    <th class="py-2 pr-4">Email</th>
+                                    <th class="py-2 pr-4">Support</th>
+                                    <th class="py-2 pr-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                {% for application in sponsorships %}
+                                    <tr>
+                                        <td class="py-3 pr-4 font-semibold">{{ application.business_name }}</td>
+                                        <td class="py-3 pr-4">{{ application.contact_name }}</td>
+                                        <td class="py-3 pr-4">{{ application.email }}</td>
+                                        <td class="py-3 pr-4">{{ application.support_level or "-" }}</td>
+                                        <td class="py-3 pr-4">
+                                            <form action="{{ url_for('main.admin_update_status', application_type='sponsor', application_id=application.id, type=selected_type, status=selected_status) }}" method="POST">
+                                                <select name="status" class="rounded-lg border border-slate-200 p-2 text-sm" onchange="this.form.submit()">
+                                                    {% for value, label in status_options[1:] %}
+                                                        <option value="{{ value }}" {% if application.status == value %}selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            {% endif %}
+
+            {% if vendors %}
+                <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                    <h2 class="text-xl font-bold mb-4">Food Vendor Applications</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm">
+                            <thead class="text-left text-slate-500">
+                                <tr>
+                                    <th class="py-2 pr-4">Business</th>
+                                    <th class="py-2 pr-4">Contact</th>
+                                    <th class="py-2 pr-4">Email</th>
+                                    <th class="py-2 pr-4">Vehicle</th>
+                                    <th class="py-2 pr-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                {% for application in vendors %}
+                                    <tr>
+                                        <td class="py-3 pr-4 font-semibold">{{ application.business_name }}</td>
+                                        <td class="py-3 pr-4">{{ application.contact_name }}</td>
+                                        <td class="py-3 pr-4">{{ application.email }}</td>
+                                        <td class="py-3 pr-4">{{ application.vehicle_make_model or "-" }}</td>
+                                        <td class="py-3 pr-4">
+                                            <form action="{{ url_for('main.admin_update_status', application_type='vendor', application_id=application.id, type=selected_type, status=selected_status) }}" method="POST">
+                                                <select name="status" class="rounded-lg border border-slate-200 p-2 text-sm" onchange="this.form.submit()">
+                                                    {% for value, label in status_options[1:] %}
+                                                        <option value="{{ value }}" {% if application.status == value %}selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            {% endif %}
+
+            {% if liabilities %}
+                <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                    <h2 class="text-xl font-bold mb-4">Liability Releases</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm">
+                            <thead class="text-left text-slate-500">
+                                <tr>
+                                    <th class="py-2 pr-4">Applicant</th>
+                                    <th class="py-2 pr-4">Company</th>
+                                    <th class="py-2 pr-4">Date</th>
+                                    <th class="py-2 pr-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                {% for application in liabilities %}
+                                    <tr>
+                                        <td class="py-3 pr-4 font-semibold">{{ application.applicant_full_name }}</td>
+                                        <td class="py-3 pr-4">{{ application.company_name or "-" }}</td>
+                                        <td class="py-3 pr-4">{{ application.application_date or "-" }}</td>
+                                        <td class="py-3 pr-4">
+                                            <form action="{{ url_for('main.admin_update_status', application_type='liability', application_id=application.id, type=selected_type, status=selected_status) }}" method="POST">
+                                                <select name="status" class="rounded-lg border border-slate-200 p-2 text-sm" onchange="this.form.submit()">
+                                                    {% for value, label in status_options[1:] %}
+                                                        <option value="{{ value }}" {% if application.status == value %}selected{% endif %}>{{ label }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            {% endif %}
+
+            {% if not sponsorships and not vendors and not liabilities %}
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-10 text-center text-slate-500">
+                    No applications match your current filters.
+                </div>
+            {% endif %}
+        </main>
+    </div>
+{% endblock %}

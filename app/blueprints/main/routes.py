@@ -1,4 +1,5 @@
-from flask import Blueprint, jsonify, redirect, render_template, url_for
+from flask import Blueprint, current_app, flash, jsonify, redirect, render_template, request, url_for
+from flask_login import current_user, login_required, login_user, logout_user
 
 from app.extensions import db
 from app.forms import (
@@ -11,6 +12,9 @@ from app.models import (
     LiabilityApplication,
     SponsorshipApplication,
 )
+from app.services.notifications import send_placeholder_email
+from app.services.uploads import save_uploaded_file
+from app.services.auth_store import authenticate_user
 
 main_bp = Blueprint("main", __name__)
 
@@ -39,6 +43,8 @@ def health_check():
 def food_vendor_application():
     form = FoodVendorApplicationForm()
     if form.validate_on_submit():
+        logo_filename = save_uploaded_file(form.logo_file.data, "food-vendor")
+        insurance_filename = save_uploaded_file(form.insurance_file.data, "food-vendor")
         application = FoodVendorApplication(
             business_name=form.business_name.data,
             contact_name=form.contact_name.data,
@@ -53,6 +59,7 @@ def food_vendor_application():
             vehicle_year=form.vehicle_year.data,
             insurance_policy_number=form.insurance_policy_number.data,
             drivers_license=form.drivers_license.data,
+            state_issued_id=form.state_issued_id.data,
             additional_vehicle_count=form.additional_vehicle_count.data,
             payment_cash=form.payment_cash.data,
             payment_debit=form.payment_debit.data,
@@ -74,10 +81,14 @@ def food_vendor_application():
             company_name=form.company_name.data,
             application_date=form.application_date.data,
             initials=form.initials.data,
+            logo_filename=logo_filename,
+            insurance_filename=insurance_filename,
         )
         db.session.add(application)
         db.session.commit()
-        return redirect(url_for("main.food_vendor_application"))
+        send_placeholder_email("Food vendor application received", form.email.data)
+        flash("Your food vendor application was submitted. Please complete the liability release.", "success")
+        return redirect(url_for("main.liability_application"))
     return render_template("food-vendor-application.html", form=form)
 
 
@@ -85,6 +96,7 @@ def food_vendor_application():
 def sponsorship_application():
     form = SponsorshipApplicationForm()
     if form.validate_on_submit():
+        logo_filename = save_uploaded_file(form.logo_file.data, "sponsorship")
         application = SponsorshipApplication(
             business_name=form.business_name.data,
             contact_name=form.contact_name.data,
@@ -94,9 +106,13 @@ def sponsorship_application():
             facebook=form.facebook.data,
             instagram=form.instagram.data,
             linkedin=form.linkedin.data,
+            support_level=form.support_level.data,
+            logo_filename=logo_filename,
         )
         db.session.add(application)
         db.session.commit()
+        send_placeholder_email("Sponsorship application received", form.email.data)
+        flash("Thanks for applying to sponsor the festival! We'll follow up soon.", "success")
         return redirect(url_for("main.sponsorship_application"))
     return render_template("sponsorship-application.html", form=form)
 
@@ -113,5 +129,101 @@ def liability_application():
         )
         db.session.add(application)
         db.session.commit()
+        send_placeholder_email(
+            "Liability release received", "liability@wishuponafoodtruck.com"
+        )
+        flash("Your liability release has been submitted. Thank you!", "success")
         return redirect(url_for("main.liability_application"))
     return render_template("liability-application.html", form=form)
+
+
+@main_bp.route("/admin/login", methods=["GET", "POST"])
+def admin_login():
+    if current_user.is_authenticated:
+        return redirect(url_for("main.admin_dashboard"))
+
+    if request.method == "POST":
+        email = request.form.get("email", "").strip()
+        password = request.form.get("password", "")
+        if not email or not password:
+            flash("Email and password are required.", "error")
+            return render_template("admin-login.html")
+
+        user = authenticate_user(
+            current_app,
+            email,
+            password,
+        )
+        if not user:
+            flash("Invalid login credentials.", "error")
+            return render_template("admin-login.html")
+
+        login_user(user)
+        flash("Welcome back!", "success")
+        return redirect(url_for("main.admin_dashboard"))
+
+    return render_template("admin-login.html")
+
+
+@main_bp.get("/admin/logout")
+@login_required
+def admin_logout():
+    logout_user()
+    flash("You have been logged out.", "success")
+    return redirect(url_for("main.admin_login"))
+
+
+@main_bp.get("/admin/dashboard")
+@login_required
+def admin_dashboard():
+    selected_type = request.args.get("type", "all")
+    selected_status = request.args.get("status", "all")
+
+    sponsor_query = SponsorshipApplication.query.order_by(SponsorshipApplication.created_at.desc())
+    vendor_query = FoodVendorApplication.query.order_by(FoodVendorApplication.created_at.desc())
+    liability_query = LiabilityApplication.query.order_by(LiabilityApplication.created_at.desc())
+
+    if selected_status != "all":
+        sponsor_query = sponsor_query.filter_by(status=selected_status)
+        vendor_query = vendor_query.filter_by(status=selected_status)
+        liability_query = liability_query.filter_by(status=selected_status)
+
+    sponsorships = sponsor_query.all() if selected_type in ("all", "sponsor") else []
+    vendors = vendor_query.all() if selected_type in ("all", "vendor") else []
+    liabilities = liability_query.all() if selected_type in ("all", "liability") else []
+
+    return render_template(
+        "admin-dashboard.html",
+        selected_type=selected_type,
+        selected_status=selected_status,
+        sponsorships=sponsorships,
+        vendors=vendors,
+        liabilities=liabilities,
+    )
+
+
+@main_bp.post("/admin/status/<string:application_type>/<int:application_id>")
+@login_required
+def admin_update_status(application_type: str, application_id: int):
+    status = request.form.get("status", "new")
+    model_map = {
+        "sponsor": SponsorshipApplication,
+        "vendor": FoodVendorApplication,
+        "liability": LiabilityApplication,
+    }
+    model = model_map.get(application_type)
+    if not model:
+        flash("Unknown application type.", "error")
+        return redirect(url_for("main.admin_dashboard"))
+
+    application = model.query.get_or_404(application_id)
+    application.status = status
+    db.session.commit()
+    flash("Status updated.", "success")
+    return redirect(
+        url_for(
+            "main.admin_dashboard",
+            type=request.args.get("type", "all"),
+            status=request.args.get("status", "all"),
+        )
+    )
