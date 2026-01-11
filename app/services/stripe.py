@@ -1,23 +1,56 @@
-from datetime import datetime
-from typing import Any, Dict
+from typing import Any, Dict, Union
+
+import stripe
+from flask import current_app
+from stripe import error as stripe_error
 
 
 def create_checkout_session(payload: Dict[str, Any]) -> Dict[str, Any]:
+    stripe.api_key = current_app.config.get("STRIPE_API_KEY")
+    if not stripe.api_key:
+        raise ValueError("Stripe API key is not configured")
+
+    line_items = payload.get("line_items")
+    if not isinstance(line_items, list) or not line_items:
+        raise ValueError("line_items must be a non-empty list")
+
+    mode = payload.get("mode", "payment")
+    success_url = payload.get("success_url")
+    cancel_url = payload.get("cancel_url")
+    if not success_url or not cancel_url:
+        raise ValueError("success_url and cancel_url are required")
+
+    session = stripe.checkout.Session.create(
+        line_items=line_items,
+        mode=mode,
+        success_url=success_url,
+        cancel_url=cancel_url,
+        customer_email=payload.get("customer_email"),
+        metadata=payload.get("metadata"),
+    )
     return {
-        "status": "stub",
+        "status": "created",
         "provider": "stripe",
-        "action": "create_checkout_session",
-        "received": payload,
-        "created_at": datetime.utcnow().isoformat() + "Z",
+        "session_id": session.id,
+        "url": session.url,
     }
 
 
-def handle_webhook(payload: Dict[str, Any], signature: str) -> Dict[str, Any]:
+def handle_webhook(payload: Union[str, bytes], signature: str) -> Dict[str, Any]:
+    webhook_secret = current_app.config.get("STRIPE_WEBHOOK_SECRET")
+    if not webhook_secret:
+        raise ValueError("Stripe webhook secret is not configured")
+    if not signature:
+        raise ValueError("Stripe signature header is required")
+
+    try:
+        event = stripe.Webhook.construct_event(payload, signature, webhook_secret)
+    except (ValueError, stripe_error.SignatureVerificationError) as exc:
+        raise ValueError(f"Invalid Stripe webhook: {exc}") from exc
+
     return {
-        "status": "stub",
+        "status": "processed",
         "provider": "stripe",
-        "action": "webhook_received",
-        "signature_present": bool(signature),
-        "event": payload,
-        "processed_at": datetime.utcnow().isoformat() + "Z",
+        "type": event.get("type"),
+        "id": event.get("id"),
     }
