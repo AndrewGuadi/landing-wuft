@@ -1,4 +1,6 @@
 Flask
+Flask-Login
+pytest
 Flask-SQLAlchemy
 Flask-WTF
 requests
