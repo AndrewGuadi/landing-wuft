@@ -40,13 +40,13 @@ def sponsor_page():
 
 @main_bp.get("/downloads/sponsorship-application")
 def sponsorship_application_pdf():
-    docs_root = os.path.abspath(os.path.join(current_app.root_path, "..", "build_docs"))
-    filename = "sponship_application.pdf"
+    docs_root = os.path.abspath(os.path.join(current_app.root_path, "downloads"))
+    filename = "sponsorship_application.pdf"
     return send_from_directory(
         docs_root,
         filename,
         as_attachment=True,
-        download_name="sponsorship-application.pdf",
+        download_name="sponsorship_application.pdf",
     )
 
 
