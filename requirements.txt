@@ -6,3 +6,4 @@ Flask-WTF
 requests
 sendgrid
 stripe
+python-dotenv
