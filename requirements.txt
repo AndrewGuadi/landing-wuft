@@ -1,4 +1,6 @@
 Flask==3.0.2
+Flask-Login==0.6.3
+pytest==8.2.2
 requests==2.32.3
 sendgrid==6.11.0
 stripe==10.10.0
