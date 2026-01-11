@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wish Upon a Food Truck Festival - Partner</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@700&family=Montserrat:wght@500;600;700;800;900&family=Paytone+One&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        display: ['Paytone One', 'sans-serif'],
+                        script: ['Dancing Script', 'cursive'],
+                        anton: ['Anton', 'sans-serif'],
+                    },
+                    colors: {
+                        'blue-deep': '#084B70',
+                        'yellow-star': '#FAC04D',
+                        'red-btn': '#FF6B6B',
+                        'red-title': '#FF6666',
+                        'text-dark': '#222222',
+                        'stat-label': '#AABBC6',
+                        'divider-blue': '#558097',
+                        'pill-slate': '#4F758B', 
+                    },
+                    dropShadow: {
+                        'hard': '4px 4px 0px rgba(0,0,0,0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom text shadows */
+        .shadow-text-dark {
+            text-shadow: 2px 2px 0px #222;
+        }
+        .shadow-text-yellow {
+            text-shadow: 2px 2px 0px #FAC04D;
+        }
+        .shadow-text-red {
+            text-shadow: 
+                1px 1px 0px #3E1010,
+                2px 2px 0px #3E1010,
+                3px 3px 0px #3E1010,
+                4px 4px 0px #3E1010,
+                5px 5px 0px #3E1010,
+                6px 6px 0px rgba(0,0,0,0.3);
+        }
+        .text-stroke-white {
+            -webkit-text-stroke: 0.35px #ffffff;
+        }
+        .text-stroke-thick {
+            -webkit-text-stroke: 2px #084B70;
+        }
+        .partner-banner-shadow {
+            text-shadow: 3px 3px 0px black;
+        }
+    </style>
+</head>
+<body class="bg-[#fcfcfc] text-text-dark font-sans overflow-x-hidden">
+
+    <nav class="flex flex-col md:flex-row justify-between items-center px-[5%] py-3 bg-white text-sm font-bold text-gray-800 shadow-sm relative z-10 gap-4 md:gap-0">
+        <div class="flex items-center gap-2 text-red-title font-black text-base uppercase tracking-wide">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#084B70" class="mr-1">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+            </svg>
+            Wish Upon a Food Truck
+        </div>
+        <ul class="flex flex-wrap justify-center items-center gap-4 md:gap-8 list-none">
+            <li><a href="{{ url_for('main.sponsor_page') }}" class="text-gray-800 hover:text-red-title transition-colors">Sponsor</a></li>
+            <li><a href="{{ url_for('main.food_vendor_page') }}" class="text-gray-800 hover:text-red-title transition-colors">Food Trucks</a></li>
+            <li><a href="{{ url_for('main.food_vendor_application') }}" class="text-gray-800 hover:text-red-title transition-colors">Table Vendors</a></li>
+            <li><a href="#" class="text-gray-800 hover:text-red-title transition-colors">Volunteer</a></li>
+            <li><a href="#" class="text-gray-800 hover:text-red-title transition-colors">Contact Us</a></li>
+            <li>
+                <a href="#" class="bg-red-btn text-white px-6 py-2 rounded-full font-extrabold text-xs tracking-wide flex items-center gap-1 hover:opacity-90">
+                    ♥ DONATE
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="bg-blue-deep min-h-[700px] relative flex justify-center items-center py-16 px-5 text-white overflow-hidden">
+        
+        <div class="flex flex-col md:flex-row w-full max-w-[1100px] justify-center items-center gap-12 relative z-10">
+            
+            <div class="relative w-[315px] h-[320px] shrink-0 md:-ml-28 flex justify-center items-center md:rotate-0 -rotate-6">
+                <img src="https://i.ibb.co/0y3wNqKB/star.png" alt="Star Background" class="absolute top-0 left-0 w-full h-full z-10 object-contain scale-150 drop-shadow-hard">
+                
+                <div class="relative z-20 text-center text-white -rotate-6">
+                    <span class="block font-display font-black text-3xl leading-tight text-blue-deep mt-6 mb-1 text-stroke-white shadow-sm md:-rotate-6">
+                        12 SEPTEMBER 2026
+                    </span>
+                    <span class="block font-bold text-2xl text-blue-deep mb-4 md:-rotate-6 text-stroke-white">
+                        11am - 4pm
+                    </span>
+                    <div class="font-display text-4xl leading-none text-white uppercase shadow-sm md:-rotate-6 mb-1 relative left-3 tracking-wide top-4 text-stroke-thick [text-shadow:3px_3px_0px_#053652]">
+                        AACA MUSEUM
+                    </div>
+                    <div class="font-display font-bold text-xl uppercase md:-rotate-6 relative top-6 left-4">
+                        161 MUSEUM DRIVE | HERSHEY
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 flex flex-col items-center relative md:-top-5 text-center">
+                
+                <div class="relative mb-2 w-full md:-left-14 top-20 mt-8 md:mt-0">
+                    <svg class="absolute w-[140%] h-[120%] -top-[10%] -left-[10%] pointer-events-none -z-10" viewBox="0 0 400 200">
+                         <path d="M20,80 Q80,10 160,20" fill="none" stroke="#FAC04D" stroke-width="2"></path>
+                         <path d="M10,90 Q70,20 150,30" fill="none" stroke="#FAC04D" stroke-width="1"></path>
+                         <polygon points="160,6 166,21 181,21 169,30 172,45 160,36 148,45 151,30 139,21 154,21" fill="#FAC04D"></polygon>
+                         <path d="M380,80 Q320,100 280,140" fill="none" stroke="#FAC04D" stroke-width="2"></path>
+                         <path d="M390,70 Q330,90 290,130" fill="none" stroke="#FAC04D" stroke-width="1"></path>
+                         <polygon points="280,140 285,142 288,147 283,148 280,153 277,148 272,147 275,142 275,142" fill="#FAC04D"></polygon>
+                    </svg>
+
+                    <div class="font-script text-6xl text-yellow-star relative block -mb-7 md:-ml-[351px] z-10 -rotate-6">
+                        Wish Upon A
+                    </div>
+                    <div class="font-display text-[50px] md:text-[78px] text-red-title uppercase tracking-wider leading-none relative z-0 shadow-text-red">
+                        FOOD TRUCK
+                    </div>
+                    <div class="font-script text-[70px] text-yellow-star block text-right -mt-12 mr-5 rotate-0 z-10 relative">
+                        Festival
+                    </div>
+                </div>
+
+                <div class="my-4 mb-8 text-center relative top-24 md:-left-24">
+                    <div class="w-[200px] h-[60px] mx-auto block -mb-6 -rotate-6 relative -left-11">
+                        <svg viewBox="0 0 200 60">
+                            <path id="benefitingCurve" d="M 10,50 Q 100,0 190,50" fill="transparent" />
+                            <text>
+                                <textPath href="#benefitingCurve" startOffset="50%" text-anchor="middle" class="font-script text-[19px] font-bold fill-white">
+                                    Benefiting
+                                </textPath>
+                            </text>
+                        </svg>
+                    </div>
+
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/MAW_Standard_RGB.png/960px-MAW_Standard_RGB.png?20180905215053" alt="Make-A-Wish" class="h-[65px] brightness-0 invert scale-125">
+                    <div class="text-[9px] font-bold uppercase tracking-widest mt-1 leading-snug">
+                        Philadelphia, Delaware<br>&amp; Susquehanna Valley
+                    </div>
+                </div>
+
+                <div class="relative top-24 md:-left-12 z-20 mt-8 md:mt-0">
+                    <a href="{{ url_for('main.sponsorship_application') }}" class="bg-yellow-star text-red-title font-display text-[32px] md:text-[52px] leading-[1.1] uppercase text-center px-12 py-8 rounded-2xl inline-block partner-banner-shadow transition-transform hover:-rotate-2 hover:scale-105 whitespace-nowrap md:whitespace-nowrap">
+                        READY TO BECOME<br>A PARTNER?
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="absolute top-[15%] left-[5%] text-white/20 text-xl">★</div>
+        <div class="absolute bottom-[20%] right-[10%] text-white/20 text-xl">★</div>
+
+        <div class="absolute -bottom-px left-0 w-full overflow-hidden leading-[0]">
+            <svg class="relative block w-[calc(100%+1.3px)] h-[40px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,40 C300,60 600,0 1200,40 L1200,120 L0,120 Z" class="fill-[#f9fbfa]"></path>
+            </svg>
+        </div>
+
+    </section>
+
+    <section class="py-20 px-5 bg-[#f9fbfa] text-center">
+        <h2 class="text-2xl md:text-2xl font-bold text-black max-w-[900px] mx-auto mb-5 leading-snug">
+            Sponsorship at <span class="text-blue-deep font-black">Wish Upon a Food Truck Festival</span> is more than brand visibility.<br class="hidden md:block">
+            It’s a chance to make a meaningful impact in our community.
+        </h2>
+        
+        <p class="text-base font-medium max-w-[800px] mx-auto mb-10 text-[#222] leading-relaxed">
+            Each sponsorship level offers unique opportunities to connect with attendees while
+            helping grant life-changing wishes for children and families. Explore the options below
+            and choose the level that aligns with your goals and heart.
+        </p>
+
+        <hr class="h-[5px] bg-divider-blue border-none w-full max-w-[1200px] mx-auto mb-12">
+
+        <div class="flex flex-col md:flex-row justify-center items-center md:items-start gap-12 max-w-6xl mx-auto my-12 text-left">
+            <div class="flex-none w-full md:w-[350px] text-center pt-2">
+                <div class="bg-red-btn rounded-3xl px-8 py-6 text-white flex flex-col items-center justify-center gap-1 mb-3">
+                    <div class="font-sans text-2xl font-bold leading-tight">Wish Granter</div>
+                    <div class="font-sans text-2xl font-medium my-1">$10,000</div>
+                    <div class="font-sans text-lg font-medium leading-tight">Star Wish Lounge<br>Sponsor</div>
+                </div>
+                <div class="text-blue-deep font-extrabold italic text-sm leading-snug">
+                    Grants one wish for a child<br>with a critical illness.
+                </div>
+            </div>
+            <div class="flex-1 w-full">
+                <h3 class="font-display text-red-title text-[42px] uppercase shadow-text-dark mb-4 leading-none tracking-wide">
+                    EXCLUSIVE SPONSORSHIP
+                </h3>
+                <ul class="list-none p-0 m-0">
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Presenting sponsor: “Festival presented by [Company]”
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Exclusive sponsor of <strong>Star Wish Lounge - “Where Our Brightest Stars Shine the Most.”</strong>
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Logo top billing on all materials (print, digital, shirts)
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Inclusion in press releases, email blasts, and post-event recap
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        On-stage thank-you &amp; brief remarks opportunity
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Premium banner placement (sponsor provides)
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Exclusive social spotlight series
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Two premium tables in high-traffic areas
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Lead logo on volunteer shirts
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <hr class="h-[5px] bg-divider-blue border-none w-full max-w-[1200px] mx-auto">
+
+        <div class="flex flex-col md:flex-row justify-center items-center md:items-start gap-12 max-w-6xl mx-auto my-12 text-left">
+            <div class="flex-none w-full md:w-[350px] text-center pt-2">
+                <div class="bg-yellow-star rounded-3xl px-8 py-6 text-white flex flex-col items-center justify-center gap-1 mb-3">
+                    <div class="font-sans text-2xl font-bold leading-tight">Wonders &amp;<br>Wishes Sponsor</div>
+                    <div class="font-sans text-2xl font-medium my-1">$5,000</div>
+                    <div class="font-sans text-lg font-medium leading-tight">Family Fun Zone</div>
+                </div>
+                <div class="text-blue-deep font-extrabold italic text-sm leading-snug">
+                    Family fun zone tent and<br>activity sponsor.
+                </div>
+            </div>
+            <div class="flex-1 w-full">
+                <h3 class="font-display text-yellow-star text-[42px] uppercase shadow-text-dark mb-4 leading-none tracking-wide">
+                    EXCLUSIVE SPONSORSHIP
+                </h3>
+                <ul class="list-none p-0 m-0">
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Naming rights: <strong>“Wonders &amp; Wishes Kids Tent</strong> sponsored by [Company]”
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Banner + logo on all kids’ activity signage
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Option to host branded activity/game &amp; provide giveaways
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        May provide volunteers to engage with families
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Social media spotlight featuring kids’ area
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        On-stage announcements driving families to tent
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Recognition as “Family Fun Sponsor” in press release &amp; recap
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Branded take-home item for kids (optional)
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <hr class="h-[5px] bg-divider-blue border-none w-full max-w-[1200px] mx-auto">
+
+        <div class="flex flex-col md:flex-row justify-center items-center md:items-start gap-12 max-w-6xl mx-auto my-12 text-left">
+            <div class="flex-none w-full md:w-[350px] text-center pt-2">
+                <div class="bg-blue-deep rounded-3xl px-8 py-6 text-white flex flex-col items-center justify-center gap-1 mb-3">
+                    <div class="font-sans text-2xl font-bold leading-tight">Food Truck<br>Champion</div>
+                    <div class="font-sans text-2xl font-medium my-1">$3,500</div>
+                </div>
+                <div class="text-blue-deep font-extrabold italic text-sm leading-snug">
+                    Fueling the fun &amp; flavor that<br>makes wishes come true.
+                </div>
+            </div>
+            <div class="flex-1 w-full">
+                <h3 class="font-display text-blue-deep text-[42px] uppercase shadow-text-yellow mb-4 leading-none tracking-wide">
+                    LIMITED TO 3 SPONSORS
+                </h3>
+                <ul class="list-none p-0 m-0">
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Limited to only three sponsors for maximum visibility and impact
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Prominent logo placement on signage, shirts, and digital/print ads
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Sponsor highlight video or Facebook/Instagram Live feature leading up to the event
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Event-day shout-outs &amp; mentions
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Large banner placement (sponsor provides)
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Two premium table spaces in high-traffic areas
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Option to sponsor a main attraction (TBD - i.e., Raffles, Volunteer HQ)
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Two complimentary food-truck meals (up to $25 each)
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Access to committee hospitality tent for sponsor representatives
+                    </li>
+                    <li class="relative pl-4 mb-2 text-blue-deep font-medium text-sm leading-snug">
+                        <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                        Social media spotlight
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <hr class="h-[5px] bg-yellow-star border-none w-full max-w-[1200px] mx-auto">
+
+        <div class="mt-12 text-center">
+            <h3 class="font-display text-blue-deep text-[42px] uppercase shadow-text-yellow mb-12 leading-none tracking-wide">
+                UNLIMITED SPONSORSHIPS<br>AVAILABLE BELOW
+            </h3>
+
+            <div class="flex flex-col gap-0 max-w-6xl mx-auto text-left">
+                
+                <div class="flex flex-col md:flex-row items-center gap-10 py-8">
+                    <div class="flex-none w-full md:w-[350px] text-center">
+                        <div class="bg-pill-slate rounded-3xl px-6 py-6 text-white flex flex-col items-center justify-center gap-1">
+                            <div class="font-sans text-2xl font-bold leading-tight">Dream Maker<br>Sponsor</div>
+                            <div class="font-sans text-2xl font-medium my-1">$2,500</div>
+                        </div>
+                    </div>
+                    <div class="flex-1 w-full">
+                        <ul class="list-none p-0 m-0">
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Logo on print/digital ads and volunteer shirts (secondary placement)
+                            </li>
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Company-branded yard sign
+                            </li>
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Event table in prime location
+                            </li>
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Social media spotlight
+                            </li>
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Option to sponsor a smaller attraction (TBD - i.e., photo booth, hydration station)
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr class="h-[5px] bg-yellow-star border-none w-full">
+
+                <div class="flex flex-col md:flex-row items-center gap-10 py-8">
+                    <div class="flex-none w-full md:w-[350px] text-center">
+                        <div class="bg-pill-slate rounded-3xl px-6 py-6 text-white flex flex-col items-center justify-center gap-1">
+                            <div class="font-sans text-2xl font-bold leading-tight">Wish Builder<br>Sponsor</div>
+                            <div class="font-sans text-2xl font-medium my-1">$1,000</div>
+                        </div>
+                    </div>
+                    <div class="flex-1 w-full">
+                        <ul class="list-none p-0 m-0">
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Company-branded yard sign
+                            </li>
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Event table
+                            </li>
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Logo on volunteer shirts (tertiary placement)
+                            </li>
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Social media recognition
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr class="h-[5px] bg-yellow-star border-none w-full">
+
+                <div class="flex flex-col md:flex-row items-center gap-10 py-8">
+                    <div class="flex-none w-full md:w-[350px] text-center">
+                        <div class="bg-pill-slate rounded-3xl px-6 py-6 text-white flex flex-col items-center justify-center gap-1">
+                            <div class="font-sans text-2xl font-bold leading-tight">Hope Helper<br>Sponsor</div>
+                            <div class="font-sans text-2xl font-medium my-1">$500</div>
+                        </div>
+                    </div>
+                    <div class="flex-1 w-full">
+                        <ul class="list-none p-0 m-0">
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Company-branded yard sign
+                            </li>
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Event table
+                            </li>
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Social media recognition
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr class="h-[5px] bg-yellow-star border-none w-full">
+
+                <div class="flex flex-col md:flex-row items-center gap-10 py-8">
+                    <div class="flex-none w-full md:w-[350px] text-center">
+                        <div class="bg-pill-slate rounded-3xl px-6 py-6 text-white flex flex-col items-center justify-center gap-1">
+                            <div class="font-sans text-2xl font-bold leading-tight">Joy Giver<br>Sponsor</div>
+                            <div class="font-sans text-2xl font-medium my-1">$250</div>
+                        </div>
+                    </div>
+                    <div class="flex-1 w-full">
+                        <ul class="list-none p-0 m-0">
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Event table
+                            </li>
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Social media recognition
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr class="h-[5px] bg-yellow-star border-none w-full">
+
+                <div class="flex flex-col md:flex-row items-center gap-10 py-8">
+                    <div class="flex-none w-full md:w-[350px] text-center">
+                        <div class="bg-blue-deep rounded-3xl px-6 py-6 text-white flex flex-col items-center justify-center gap-1">
+                            <div class="font-sans text-xl font-medium leading-tight">In-Kind Sponsors</div>
+                            <div class="font-sans text-2xl font-bold leading-tight">Wish Boosters</div>
+                            <div class="font-sans text-xl font-medium my-1">$2,500+ value</div>
+                        </div>
+                    </div>
+                    <div class="flex-1 w-full">
+                        <ul class="list-none p-0 m-0">
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Recognition as a <strong>Wish Booster Sponsor</strong>
+                            </li>
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Social media recognition
+                            </li>
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Company-branded yard sign
+                            </li>
+                            <li class="relative pl-4 mb-1 text-blue-deep font-medium text-sm leading-snug">
+                                <span class="absolute left-0 top-0 text-blue-deep font-bold text-sm">•</span>
+                                Included in post-event thank-you messaging and recap materials
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr class="h-[5px] bg-yellow-star border-none w-full">
+
+            </div>
+        </div>
+
+    </section>
+
+    <section class="bg-white py-16 px-5 pb-24 text-center relative">
+        
+        <div class="relative z-10 inline-block mb-10">
+            <a href="{{ url_for('main.sponsorship_application') }}" class="bg-yellow-star text-red-title font-display text-[40px] md:text-[56px] leading-[1.1] uppercase text-center px-12 py-6 rounded-3xl inline-block partner-banner-shadow transition-transform hover:-rotate-1 hover:scale-105">
+                <span class="block shadow-text-red">BECOME A</span>
+                <span class="block shadow-text-red">PARTNER TODAY!</span>
+            </a>
+        </div>
+
+        <h2 class="font-anton text-blue-deep text-3xl md:text-5xl uppercase mb-4 tracking-wide font-black">
+            10 YEARS. 10,000 SMILES. $10,000 TO MAKE ONE WISH COME TRUE.
+        </h2>
+
+        <p class="text-red-btn font-sans font-medium text-lg md:text-2xl leading-relaxed">
+            Join us as we celebrate a decade of wishes and help us make the next one happen!
+        </p>
+
+    </section>
+
+    <footer class="bg-blue-deep border-t-[2px] border-dotted border-white/50 pt-20 px-5 pb-10 text-white font-sans">
+        <div class="flex flex-wrap justify-between items-start max-w-[1100px] mx-auto mb-16 gap-10">
+            
+            <div class="flex-1 min-w-[250px] text-center md:text-left">
+                <img src="https://i.ibb.co/j9S8LXRb/Gemini-Generated-Image-jqsetxjqsetxjqse.png" alt="Wish Upon A Food Truck Festival Logo" class="max-w-[220px] h-auto mx-auto md:mx-0">
+            </div>
+
+            <div class="flex-1 min-w-[200px] text-center md:text-left">
+                <h4 class="text-yellow-star font-extrabold uppercase text-xl mb-6 tracking-wide">Action</h4>
+                <ul class="list-none space-y-4">
+                    <li><a href="{{ url_for('main.sponsor_page') }}" class="text-white hover:text-yellow-star font-semibold text-base transition-colors tracking-wide">Sponsor</a></li>
+                    <li><a href="{{ url_for('main.food_vendor_page') }}" class="text-white hover:text-yellow-star font-semibold text-base transition-colors tracking-wide">Food Trucks</a></li>
+                    <li><a href="{{ url_for('main.food_vendor_application') }}" class="text-white hover:text-yellow-star font-semibold text-base transition-colors tracking-wide">Table Vendors</a></li>
+                    <li><a href="#" class="text-white hover:text-yellow-star font-semibold text-base transition-colors tracking-wide">Volunteers</a></li>
+                </ul>
+            </div>
+
+            <div class="flex-1 min-w-[200px] text-center md:text-left">
+                <h4 class="text-yellow-star font-extrabold uppercase text-xl mb-6 tracking-wide">Connect</h4>
+                <a href="mailto:hello@wishuponafoodtruck.com" class="text-white font-semibold text-base block mb-8">hello@wishuponafoodtruck.com</a>
+                
+                <div class="flex justify-center md:justify-start gap-5 mt-8">
+                    <a href="#" aria-label="Facebook" class="bg-white flex justify-center items-center w-10 h-10 rounded-full transition-transform hover:-translate-y-1 group">
+                        <svg viewBox="0 0 24 24" class="w-6 h-6 fill-blue-deep">
+                            <path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10.05 10.05 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn" class="bg-white flex justify-center items-center w-10 h-10 rounded-md transition-transform hover:-translate-y-1 group">
+                        <svg viewBox="0 0 24 24" class="w-6 h-6 fill-blue-deep">
+                            <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M6.5 6A2.5 2.5 0 1 0 9 8.5A2.5 2.5 0 0 0 6.5 6M8 19V10H5V19H8M19 19V14C19 11.8 17.4 10 15.2 10C14.1 10 13.1 10.5 12.5 11.3V10H9.8V19H12.8V14.2C12.8 13.1 13.7 12.2 14.8 12.2C15.9 12.2 16.8 13.1 16.8 14.2V19H19Z"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Instagram" class="bg-white flex justify-center items-center w-10 h-10 rounded-md transition-transform hover:-translate-y-1 group">
+                        <svg viewBox="0 0 24 24" class="w-6 h-6 fill-blue-deep">
+                            <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-center text-[13px] max-w-[900px] mx-auto leading-relaxed opacity-80 font-medium">
+            Make-A-Wish Foundation of Philadelphia, Delaware and Susquehanna Valley is a Pennsylvania nonprofit corporation exempt from federal income tax under Section (c)(3) of the Internal Revenue Code.
+        </div>
+    </footer>
+
+</body>
+</html>
