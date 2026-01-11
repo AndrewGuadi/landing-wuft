@@ -2,6 +2,7 @@ Flask
 Flask-Login
 pytest
 Flask-SQLAlchemy
+Flask-Migrate
 Flask-WTF
 requests
 sendgrid
