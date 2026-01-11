@@ -88,6 +88,7 @@
                                     <th class="py-2 pr-4">Email</th>
                                     <th class="py-2 pr-4">Support</th>
                                     <th class="py-2 pr-4">Status</th>
+                                    <th class="py-2 pr-4">Details</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100">
@@ -105,6 +106,9 @@
                                                     {% endfor %}
                                                 </select>
                                             </form>
+                                        </td>
+                                        <td class="py-3 pr-4">
+                                            <a href="{{ url_for('main.admin_application_detail', application_type='sponsor', application_id=application.id, type=selected_type, status=selected_status) }}" class="text-blue-deep font-semibold hover:underline">View</a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -126,6 +130,7 @@
                                     <th class="py-2 pr-4">Email</th>
                                     <th class="py-2 pr-4">Vehicle</th>
                                     <th class="py-2 pr-4">Status</th>
+                                    <th class="py-2 pr-4">Details</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100">
@@ -143,6 +148,9 @@
                                                     {% endfor %}
                                                 </select>
                                             </form>
+                                        </td>
+                                        <td class="py-3 pr-4">
+                                            <a href="{{ url_for('main.admin_application_detail', application_type='vendor', application_id=application.id, type=selected_type, status=selected_status) }}" class="text-blue-deep font-semibold hover:underline">View</a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -163,6 +171,7 @@
                                     <th class="py-2 pr-4">Company</th>
                                     <th class="py-2 pr-4">Date</th>
                                     <th class="py-2 pr-4">Status</th>
+                                    <th class="py-2 pr-4">Details</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100">
@@ -179,6 +188,9 @@
                                                     {% endfor %}
                                                 </select>
                                             </form>
+                                        </td>
+                                        <td class="py-3 pr-4">
+                                            <a href="{{ url_for('main.admin_application_detail', application_type='liability', application_id=application.id, type=selected_type, status=selected_status) }}" class="text-blue-deep font-semibold hover:underline">View</a>
                                         </td>
                                     </tr>
                                 {% endfor %}
