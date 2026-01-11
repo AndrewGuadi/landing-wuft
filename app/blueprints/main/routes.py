@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, url_for
+from flask import Blueprint, jsonify, redirect, render_template, url_for
 
 from app.extensions import db
 from app.forms import (
@@ -28,6 +28,11 @@ def sponsor_page():
 @main_bp.get("/food-vendor")
 def food_vendor_page():
     return render_template("food-vendor.html")
+
+
+@main_bp.get("/health")
+def health_check():
+    return jsonify({"status": "ok"}), 200
 
 
 @main_bp.route("/food-vendor-application", methods=["GET", "POST"])
