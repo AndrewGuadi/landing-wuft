@@ -5,8 +5,8 @@ from app.services.auth_store import create_user, init_auth_db
 
 
 def main() -> None:
-    email = 'team@wishuponafoodtruck.com'
-    password = 'newpassword'
+    email = os.getenv("ADMIN_EMAIL")
+    password = os.getenv("ADMIN_PASSWORD")
 
     if not email or not password:
         raise SystemExit("Set ADMIN_EMAIL and ADMIN_PASSWORD to seed an admin account.")

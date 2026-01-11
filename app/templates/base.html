@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@700&family=Montserrat:wght@500;600;700;800;900&family=Paytone+One&display=swap" rel="stylesheet">
-
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     {% block head %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
@@ -25,7 +25,8 @@
                         {% elif category == "error" %}
                             {% set tone = "bg-red-50 border-red-200 text-red-700" %}
                         {% endif %}
-                        <div class="border rounded-lg px-4 py-3 {{ tone }}">
+                        
+                        <div class="flash-message border rounded-lg px-4 py-3 {{ tone }}" role="alert">
                             <p class="font-semibold">{{ message }}</p>
                         </div>
                     {% endfor %}
@@ -37,5 +38,28 @@
     {% block content %}{% endblock %}
 
     {% block footer %}{% include "includes/footer.html" %}{% endblock %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select all elements with the 'flash-message' class
+            const messages = document.querySelectorAll('.flash-message');
+            
+            if (messages.length > 0) {
+                // Wait 5 seconds (5000ms)
+                setTimeout(function() {
+                    messages.forEach(function(msg) {
+                        // Add CSS transition for smooth fade out
+                        msg.style.transition = "opacity 0.5s ease";
+                        msg.style.opacity = "0";
+                        
+                        // After the fade out (0.5s), remove the element from the DOM
+                        setTimeout(function() {
+                            msg.remove();
+                        }, 500); 
+                    });
+                }, 5000);
+            }
+        });
+    </script>
 </body>
 </html>

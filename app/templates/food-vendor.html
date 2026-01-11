@@ -3,7 +3,7 @@
 {% block title %}Wish Upon a Food Truck Festival - Vendor Info{% endblock %}
 
 {% block head %}
-<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@700&family=Montserrat:wght@500;600;700;800;900&family=Paytone+One&display=swap" rel="stylesheet">
 
@@ -34,7 +34,181 @@
     </script>
 
     <style>
-        /* Custom Text Shadows */
+        /* --- IMPORTED HERO STYLES (Matches Home.html) --- */
+        :root {
+            --bg-blue: #084B70;
+            --star-yellow: #FAC04D;
+            --btn-red: #FF6B6B;
+            --title-red: #FF6666;
+            --shadow-red: #4A1A1A;
+            --text-dark: #222;
+        }
+
+        /* Hero Container */
+        .hero {
+            background-color: var(--bg-blue);
+            min-height: 650px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px 120px 20px;
+            color: white;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .hero-container {
+            display: flex;
+            width: 100%;
+            max-width: 1100px;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Left Star Area */
+        .star-wrapper {
+            left: -113px;
+            position: relative;
+            width: 315px;
+            height: 320px;
+            transform: rotate(0deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .star-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            object-fit: contain;
+            transform: scale(1.5);
+            filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.15));
+        }
+
+        .star-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            transform: rotate(-5deg); 
+        }
+
+        .star-date {
+            font-family: 'Paytone One', sans-serif;
+            font-weight: 900;
+            font-size: 32px;
+            line-height: 1.1;
+            position: relative;
+            color: var(--bg-blue);
+            top: 22px;
+            -webkit-text-stroke: 0.35px #ffffff;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+            transform: rotate(-6deg);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .star-time {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 25px;
+            position: relative;
+            color: var(--bg-blue);
+            top: 23px;
+            display: block;
+            margin-bottom: 15px;
+            transform: rotate(-6deg);
+            -webkit-text-stroke: 0.75px #ffffff;
+        }
+
+        .star-location {
+            font-family: 'Paytone One', sans-serif;
+            font-size: 36px;
+            line-height: 1;
+            color: white; 
+            -webkit-text-stroke: 2px var(--bg-blue);
+            text-transform: uppercase;
+            text-shadow: 3px 3px 0px #053652;
+            transform: rotate(-6deg);
+            margin-bottom: 5px;
+            left: 14px;
+            letter-spacing: 1px;
+            position: relative;
+            top: 17px;
+        }
+
+        .star-address {
+            font-family: 'Paytone One', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            text-transform: uppercase;
+            transform: rotate(-6deg);
+            position:relative;
+            top:25px;
+            left:15px;
+        }
+
+        /* Right Content */
+        .right-content {
+            flex: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            top: -20px;
+        }
+
+        /* Stars & Decor */
+        .shooting-lines {
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            top: -10%;
+            left: -10%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .small-star {
+            position: absolute;
+            color: rgba(255,255,255,0.2);
+            font-size: 20px;
+        }
+
+        .custom-shape-divider {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        .custom-shape-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 40px;
+        }
+        .custom-shape-divider .shape-fill { fill: #fcfcfc; }
+        
+        /* Hero Responsive */
+        @media (max-width: 900px) {
+            .hero-container { flex-direction: column; gap: 20px; }
+            .star-wrapper { width: 350px; height: 350px; transform: rotate(-10deg); }
+            .right-content { top: 0; }
+        }
+
+        /* Custom Text Shadows (Kept from your original file for use in body) */
         .shadow-text-red {
             text-shadow: 
                 1px 1px 0px #3E1010,
@@ -62,33 +236,27 @@
 {% block body_class %}bg-[#fcfcfc] text-text-dark font-sans overflow-x-hidden flex flex-col min-h-screen{% endblock %}
 
 {% block content %}
-<section class="bg-blue-deep min-h-[750px] relative flex justify-center items-center py-16 px-5 text-white overflow-hidden">
+    
+    <section class="hero">
         
-        <div class="flex flex-col md:flex-row w-full max-w-7xl justify-center items-center gap-10 relative z-10">
+        <div class="hero-container">
             
-            <div class="relative w-[340px] h-[340px] shrink-0 md:-ml-20 flex justify-center items-center md:rotate-0 -rotate-6 scale-90 md:scale-100 transition-transform">
-                <img src="https://i.ibb.co/0y3wNqKB/star.png" alt="Star Background" class="absolute top-0 left-0 w-full h-full z-10 object-contain scale-150 drop-shadow-hard">
+            <div class="star-wrapper">
+                <img src="https://i.ibb.co/0y3wNqKB/star.png" alt="Star Background" class="star-img">
                 
-                <div class="relative z-20 text-center text-white -rotate-6">
-                    <span class="block font-display font-black text-3xl leading-tight text-blue-deep mt-6 mb-1 text-stroke-white shadow-sm md:-rotate-6">
-                        12 SEPTEMBER 2026
-                    </span>
-                    <span class="block font-bold text-2xl text-blue-deep mb-4 md:-rotate-6 text-stroke-white">
-                        11am - 4pm
-                    </span>
-                    <div class="font-display text-4xl leading-none text-white uppercase shadow-sm md:-rotate-6 mb-1 relative left-3 tracking-wide top-4 text-stroke-thick shadow-location">
-                        AACA MUSEUM
-                    </div>
-                    <div class="font-display font-bold text-xl uppercase md:-rotate-6 relative top-6 left-4">
-                        161 MUSEUM DRIVE | HERSHEY
-                    </div>
+                <div class="star-content">
+                    <span class="star-date">12 SEPTEMBER 2026</span>
+                    <span class="star-time">11am - 4pm</span>
+                    <div class="star-location">AACA MUSEUM</div>
+                    <div class="star-address">161 MUSEUM DRIVE | HERSHEY</div>
                 </div>
             </div>
 
-            <div class="flex-1 flex flex-col items-center relative md:-top-5 text-center w-full">
+            <div class="right-content">
                 
-                <div class="relative mb-2 w-full md:-left-14 top-10 mt-8 md:mt-0">
-                    <svg class="absolute w-[140%] h-[120%] -top-[10%] -left-[10%] pointer-events-none -z-10" viewBox="0 0 400 200">
+                <div class="relative w-full md:-left-[57px] top-[100px] mb-10">
+                    
+                    <svg class="absolute w-[140%] h-[120%] -top-[50px] -left-[350px] pointer-events-none -z-10" viewBox="0 0 400 200">
                          <path d="M20,80 Q80,10 160,20" fill="none" stroke="#FAC04D" stroke-width="2"></path>
                          <path d="M10,90 Q70,20 150,30" fill="none" stroke="#FAC04D" stroke-width="1"></path>
                          <polygon points="160,6 166,21 181,21 169,30 172,45 160,36 148,45 151,30 139,21 154,21" fill="#FAC04D"></polygon>
@@ -97,22 +265,35 @@
                          <polygon points="280,140 285,142 288,147 283,148 280,153 277,148 272,147 275,142 275,142" fill="#FAC04D"></polygon>
                     </svg>
 
-                    <div class="font-script text-6xl text-yellow-star relative block -mb-7 md:-ml-[351px] z-10 -rotate-6">Wish Upon A</div>
+                    <div class="font-script text-[62px] text-yellow-star relative block -mb-[29px] md:-ml-[351px] z-10 -rotate-[5deg]">Wish Upon A</div>
                     <div class="font-display text-[50px] md:text-[78px] text-red-title uppercase tracking-wider leading-none relative z-0 shadow-text-red">FOOD TRUCK</div>
-                    <div class="font-script text-[70px] text-yellow-star block text-right -mt-12 mr-5 rotate-0 z-10 relative">Festival</div>
+                    <div class="font-script text-[70px] text-yellow-star block text-right -mt-[47px] mr-5 rotate-0 z-10 relative">Festival</div>
                 </div>
 
-                <div class="my-4 mb-8 text-center relative top-12 md:-left-24">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/MAW_Standard_RGB.png/960px-MAW_Standard_RGB.png?20180905215053" alt="Make-A-Wish" class="h-[65px] brightness-0 invert scale-[1.2]">
-                    <div class="text-[9px] font-bold uppercase tracking-widest mt-1 leading-snug">
+                <div class="relative top-[80px] md:top-[111px] md:-left-[100px] text-center">
+                    
+                    <div class="w-[200px] h-[60px] mx-auto block -mb-[25px] relative -left-[45px] -rotate-[5deg]">
+                        <svg viewBox="0 0 200 60" class="overflow-visible">
+                            <path id="benefitingCurve" d="M 10,50 Q 100,0 190,50" fill="transparent" />
+                            <text class="font-script font-bold fill-white text-[19px]" style="font-family: 'Dancing Script', cursive;">
+                                <textPath href="#benefitingCurve" startOffset="50%" text-anchor="middle">
+                                    Benefiting
+                                </textPath>
+                            </text>
+                        </svg>
+                    </div>
+
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/MAW_Standard_RGB.png/960px-MAW_Standard_RGB.png?20180905215053" alt="Make-A-Wish" class="h-[65px] brightness-0 invert scale-125 mx-auto">
+                    
+                    <div class="text-[9px] font-bold uppercase tracking-widest mt-2 leading-snug">
                         Philadelphia, Delaware<br>&amp; Susquehanna Valley
                     </div>
                 </div>
 
-                <div class="relative top-16 md:-left-12 z-20 mt-8 md:mt-0 w-full md:w-auto">
-                    <a href="{{ url_for('main.food_vendor_application') }}" class="bg-yellow-star rounded-2xl block w-full md:min-w-[500px] px-8 py-6 transition-transform hover:-rotate-1 hover:scale-105 shadow-xl">
+                <div class="relative top-[80px] md:top-[100px] md:-left-[60px] z-20 mt-8 md:mt-0 w-full md:w-auto">
+                    <a href="{{ url_for('main.food_vendor_application') }}" class="bg-yellow-star rounded-[25px] block w-full md:min-w-[500px] px-8 py-4 transition-transform hover:scale-105 shadow-xl">
                         <div class="text-center font-display text-[40px] md:text-[52px] leading-[1] uppercase text-red-title shadow-text-black-hard">
-                            FOOD TRUCK VENDOR<br>INFORMATION
+                            FOOD TRUCK <br>INFORMATION
                         </div>
                     </a>
                 </div>
@@ -120,11 +301,15 @@
             </div>
         </div>
 
-        <div class="absolute -bottom-px left-0 w-full overflow-hidden leading-[0]">
-            <svg class="relative block w-[calc(100%+1.3px)] h-[50px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M0,40 C300,60 600,0 1200,40 L1200,120 L0,120 Z" class="fill-[#fcfcfc]"></path>
+        <div class="small-star" style="top: 15%; left: 5%;">★</div>
+        <div class="small-star" style="bottom: 20%; right: 10%;">★</div>
+
+        <div class="custom-shape-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,40 C300,60 600,0 1200,40 L1200,120 L0,120 Z" class="shape-fill"></path>
             </svg>
         </div>
+
     </section>
 
     <section class="pt-20 px-5 bg-[#fcfcfc] text-center">
