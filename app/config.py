@@ -6,6 +6,9 @@ class Config:
     AUTH_DB_PATH = os.getenv("AUTH_DB_PATH", os.path.join(os.path.dirname(__file__), "auth.db"))
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///local.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    UPLOAD_FOLDER = os.getenv(
+        "UPLOAD_FOLDER", os.path.join(os.path.dirname(__file__), "uploads")
+    )
     STRIPE_API_KEY = os.getenv("STRIPE_API_KEY", "")
     STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")
     TEAMS_WEBHOOK_URL = os.getenv("TEAMS_WEBHOOK_URL", "")

@@ -1513,6 +1513,19 @@
             <form action="{{ url_for('main.liability_application') }}" method="POST">
                 {{ form.hidden_tag() }}
 
+                {% if form.errors %}
+                    <div class="rounded-lg border border-red-200 bg-red-50 text-red-700 p-4 mb-6">
+                        <p class="font-bold mb-2">Please fix the errors below.</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            {% for field_errors in form.errors.values() %}
+                                {% for error in field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
                 <div
                     class="space-y-6 text-blue-deep font-bold text-base md:text-lg leading-relaxed text-justify md:text-left">
 
@@ -1561,11 +1574,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mt-10">
                     <div>
                         <label class="block text-base font-bold text-gray-900 mb-2">Applicant Signature</label>
-                        {{ form.applicant_signature(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep focus:outline-none") }}
+                        {{ form.applicant_signature(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep focus:outline-none", required=true, placeholder="Type your full name") }}
                     </div>
                     <div>
                         <label class="block text-base font-bold text-gray-900 mb-2">Applicant Full Name</label>
-                        {{ form.applicant_full_name(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep focus:outline-none") }}
+                        {{ form.applicant_full_name(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep focus:outline-none", required=true) }}
                     </div>
                     <div>
                         <label class="block text-base font-bold text-gray-900 mb-2">Company Name</label>
