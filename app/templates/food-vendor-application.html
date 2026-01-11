@@ -136,25 +136,38 @@
 
     <section class="py-20 px-5 bg-[#fcfcfc]">
         <div class="max-w-4xl mx-auto w-full">
-            <form action="{{ url_for('main.food_vendor_application') }}" method="POST" class="space-y-8">
+            <form action="{{ url_for('main.food_vendor_application') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
                 {{ form.hidden_tag() }}
+
+                {% if form.errors %}
+                    <div class="rounded-lg border border-red-200 bg-red-50 text-red-700 p-4">
+                        <p class="font-bold mb-2">Please fix the errors below.</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            {% for field_errors in form.errors.values() %}
+                                {% for error in field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
                 
                 <div class="space-y-6">
                     <div>
                         <label for="business-name" class="block text-base font-bold text-gray-900 mb-2">Business Name (required)</label>
-                        {{ form.business_name(id="business-name", class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep focus:outline-none text-gray-700") }}
+                        {{ form.business_name(id="business-name", class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep focus:outline-none text-gray-700", required=true) }}
                     </div>
                     <div>
                         <label for="contact-name" class="block text-base font-bold text-gray-900 mb-2">Contact Name (required)</label>
-                        {{ form.contact_name(id="contact-name", class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep focus:outline-none text-gray-700") }}
+                        {{ form.contact_name(id="contact-name", class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep focus:outline-none text-gray-700", required=true) }}
                     </div>
                     <div>
                         <label for="cell-phone" class="block text-base font-bold text-gray-900 mb-2">Cell Phone (required)</label>
-                        {{ form.cell_phone(id="cell-phone", class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep focus:outline-none text-gray-700") }}
+                        {{ form.cell_phone(id="cell-phone", class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep focus:outline-none text-gray-700", required=true) }}
                     </div>
                     <div>
                         <label for="email" class="block text-base font-bold text-gray-900 mb-2">Email (required)</label>
-                        {{ form.email(id="email", class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep focus:outline-none text-gray-700") }}
+                        {{ form.email(id="email", class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep focus:outline-none text-gray-700", required=true) }}
                     </div>
                     <div>
                         <label for="address" class="block text-base font-bold text-gray-900 mb-2">Address</label>
@@ -181,7 +194,7 @@
                     
                     <div class="flex flex-wrap gap-6">
                         <label class="flex items-center gap-2 cursor-pointer">
-                            {{ locations[0](class="sr-only") }}
+                            {{ locations[0](class="sr-only", required=true) }}
                             <span class="w-6 h-6 rounded-full bg-yellow-star block"></span>
                             <span class="font-bold text-gray-800">Driver’s Side</span>
                         </label>
@@ -204,23 +217,28 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-base font-bold text-gray-900 mb-2">Make/Model:</label>
-                            {{ form.vehicle_make_model(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep text-gray-700") }}
+                            {{ form.vehicle_make_model(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep text-gray-700", required=true) }}
                         </div>
                         <div>
                             <label class="block text-base font-bold text-gray-900 mb-2">Year:</label>
-                            {{ form.vehicle_year(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep text-gray-700") }}
+                            {{ form.vehicle_year(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep text-gray-700", required=true) }}
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-base font-bold text-gray-900 mb-2">Insurance Policy Number:</label>
-                            {{ form.insurance_policy_number(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep text-gray-700") }}
+                            {{ form.insurance_policy_number(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep text-gray-700", required=true) }}
                         </div>
                         <div>
-                            <label class="block text-base font-bold text-gray-900 mb-2">Driver’s License Number & State Issued</label>
+                            <label class="block text-base font-bold text-gray-900 mb-2">Driver’s License Number</label>
                             {{ form.drivers_license(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep text-gray-700") }}
                         </div>
+                    </div>
+                    <div>
+                        <label class="block text-base font-bold text-gray-900 mb-2">State Issued ID (if no driver’s license)</label>
+                        {{ form.state_issued_id(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep text-gray-700") }}
+                        <p class="text-sm italic mt-2 text-gray-600">Provide either a driver’s license number or a state-issued ID.</p>
                     </div>
 
                     <div>
@@ -263,6 +281,9 @@
                         <span class="font-bold text-gray-800 mr-2">Other:</span>
                         {{ form.payment_other(class="flex-1 rounded-lg border-none bg-white p-2 h-10 shadow-sm focus:ring-2 focus:ring-blue-deep") }}
                     </div>
+                    {% if form.payment_cash.errors %}
+                        <p class="text-red-600 text-sm mt-2">{{ form.payment_cash.errors[0] }}</p>
+                    {% endif %}
                 </div>
 
                 <div class="space-y-6">
@@ -277,34 +298,37 @@
                             {{ form.menu_item_1(class="w-full rounded-lg border-none bg-white p-3 shadow-sm") }}
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-900 mb-1">Item 5:</label>
-                            {{ form.menu_item_5(class="w-full rounded-lg border-none bg-white p-3 shadow-sm") }}
-                        </div>
-                        <div>
                             <label class="block text-sm font-bold text-gray-900 mb-1">Item 2:</label>
                             {{ form.menu_item_2(class="w-full rounded-lg border-none bg-white p-3 shadow-sm") }}
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-900 mb-1">Item 6:</label>
-                            {{ form.menu_item_6(class="w-full rounded-lg border-none bg-white p-3 shadow-sm") }}
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-900 mb-1">Item 3:</label>
                             {{ form.menu_item_3(class="w-full rounded-lg border-none bg-white p-3 shadow-sm") }}
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-900 mb-1">Item 7:</label>
-                            {{ form.menu_item_7(class="w-full rounded-lg border-none bg-white p-3 shadow-sm") }}
-                        </div>
-                        <div>
                             <label class="block text-sm font-bold text-gray-900 mb-1">Item 4:</label>
                             {{ form.menu_item_4(class="w-full rounded-lg border-none bg-white p-3 shadow-sm") }}
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-1">Item 5:</label>
+                            {{ form.menu_item_5(class="w-full rounded-lg border-none bg-white p-3 shadow-sm") }}
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-1">Item 6:</label>
+                            {{ form.menu_item_6(class="w-full rounded-lg border-none bg-white p-3 shadow-sm") }}
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-1">Item 7:</label>
+                            {{ form.menu_item_7(class="w-full rounded-lg border-none bg-white p-3 shadow-sm") }}
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-gray-900 mb-1">Item 8:</label>
                             {{ form.menu_item_8(class="w-full rounded-lg border-none bg-white p-3 shadow-sm") }}
                         </div>
                     </div>
+                    {% if form.menu_item_1.errors %}
+                        <p class="text-red-600 text-sm">{{ form.menu_item_1.errors[0] }}</p>
+                    {% endif %}
                 </div>
 
                 <div class="space-y-4 pt-4 text-blue-deep font-medium text-sm leading-relaxed">
@@ -315,20 +339,20 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
                     <div>
-                        <label class="block text-base font-bold text-gray-900 mb-2">Applicant Signature</label>
-                        {{ form.applicant_signature(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep") }}
+                        <label class="block text-base font-bold text-gray-900 mb-2">Applicant Signature (digital)</label>
+                        {{ form.applicant_signature(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep", placeholder="Type your full name", required=true) }}
                     </div>
                     <div>
                         <label class="block text-base font-bold text-gray-900 mb-2">Applicant Full Name</label>
-                        {{ form.applicant_full_name(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep") }}
+                        {{ form.applicant_full_name(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep", required=true) }}
                     </div>
                     <div>
                         <label class="block text-base font-bold text-gray-900 mb-2">Company Name</label>
-                        {{ form.company_name(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep") }}
+                        {{ form.company_name(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep", required=true) }}
                     </div>
                     <div>
                         <label class="block text-base font-bold text-gray-900 mb-2">Date</label>
-                        {{ form.application_date(class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep") }}
+                        {{ form.application_date(type="date", class="w-full rounded-lg border-none bg-white p-4 h-12 shadow-sm focus:ring-2 focus:ring-blue-deep", required=true) }}
                     </div>
                 </div>
 
@@ -338,23 +362,31 @@
                     </p>
                     <div class="text-right">
                         <label class="block text-sm font-bold text-gray-900 mb-1">Initials</label>
-                        {{ form.initials(class="w-20 rounded-lg border-none bg-white p-2 text-center shadow-sm") }}
+                        {{ form.initials(class="w-20 rounded-lg border-none bg-white p-2 text-center shadow-sm", required=true) }}
                     </div>
                 </div>
 
                 <div class="flex flex-col items-center gap-6 pt-10 pb-10">
                     
-                    <button type="button" class="bg-blue-deep rounded-xl px-12 py-4 shadow-lg hover:scale-105 transition-transform">
+                    <label class="bg-blue-deep rounded-xl px-12 py-4 shadow-lg hover:scale-105 transition-transform cursor-pointer w-full md:w-auto">
                         <div class="text-center font-display text-2xl uppercase text-red-title shadow-text-black-hard leading-none">
                             UPLOAD YOUR<br>LOGOS
                         </div>
-                    </button>
+                        {{ form.logo_file(class="sr-only", accept=".svg,.png,.jpg,.jpeg,.eps,.esp,.webp", required=true) }}
+                    </label>
+                    {% if form.logo_file.errors %}
+                        <p class="text-red-600 text-sm">{{ form.logo_file.errors[0] }}</p>
+                    {% endif %}
 
-                    <button type="button" class="bg-blue-deep rounded-xl px-12 py-4 shadow-lg hover:scale-105 transition-transform">
+                    <label class="bg-blue-deep rounded-xl px-12 py-4 shadow-lg hover:scale-105 transition-transform cursor-pointer w-full md:w-auto">
                         <div class="text-center font-display text-2xl uppercase text-red-title shadow-text-black-hard leading-none">
                             UPLOAD YOUR<br>CERTIFICATE OF<br>INSURANCE
                         </div>
-                    </button>
+                        {{ form.insurance_file(class="sr-only", accept=".svg,.png,.jpg,.jpeg,.eps,.esp,.webp", required=true) }}
+                    </label>
+                    {% if form.insurance_file.errors %}
+                        <p class="text-red-600 text-sm">{{ form.insurance_file.errors[0] }}</p>
+                    {% endif %}
 
                     <button type="submit" class="bg-blue-deep rounded-xl px-12 py-4 shadow-lg hover:scale-105 transition-transform">
                         <div class="text-center font-display text-2xl uppercase text-red-title shadow-text-black-hard leading-none">
