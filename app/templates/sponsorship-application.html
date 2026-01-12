@@ -169,6 +169,13 @@
             top: -20px;
         }
 
+        .main-event-logo {
+            width: 100%;
+            max-width: 460px;
+            height: auto;
+            margin-bottom: 24px;
+        }
+
         .small-star {
             position: absolute;
             color: rgba(255,255,255,0.2);
@@ -193,7 +200,7 @@
         
         /* Hero Responsive */
         @media (max-width: 900px) {
-            .hero-container { flex-direction: column; gap: 20px; }
+            .hero-container { flex-direction: column-reverse; gap: 20px; }
             .star-wrapper { width: 350px; height: 350px; transform: rotate(-10deg); }
             .right-content { top: 0; }
         }
@@ -243,51 +250,12 @@
             </div>
 
             <div class="right-content">
-                
-                <div class="relative w-full md:-left-[57px] top-[100px] mb-10">
-                    
-                    <svg class="absolute w-[140%] h-[120%] -top-[50px] -left-[350px] pointer-events-none -z-10" viewBox="0 0 400 200">
-                         <path d="M20,80 Q80,10 160,20" fill="none" stroke="#FAC04D" stroke-width="2"></path>
-                         <path d="M10,90 Q70,20 150,30" fill="none" stroke="#FAC04D" stroke-width="1"></path>
-                         <polygon points="160,6 166,21 181,21 169,30 172,45 160,36 148,45 151,30 139,21 154,21" fill="#FAC04D"></polygon>
-                         <path d="M380,80 Q320,100 280,140" fill="none" stroke="#FAC04D" stroke-width="2"></path>
-                         <path d="M390,70 Q330,90 290,130" fill="none" stroke="#FAC04D" stroke-width="1"></path>
-                         <polygon points="280,140 285,142 288,147 283,148 280,153 277,148 272,147 275,142 275,142" fill="#FAC04D"></polygon>
-                    </svg>
-
-                    <div class="font-script text-[62px] text-yellow-star relative block -mb-[29px] md:-ml-[351px] z-10 -rotate-[5deg]">Wish Upon A</div>
-                    <div class="font-display text-[50px] md:text-[78px] text-red-title uppercase tracking-wider leading-none relative z-0 shadow-text-red">FOOD TRUCK</div>
-                    <div class="font-script text-[70px] text-yellow-star block text-right -mt-[47px] mr-5 rotate-0 z-10 relative">Festival</div>
-                </div>
-
-                <div class="relative top-[100px] md:top-[35px] md:-left-[100px] text-center mt-6 md:mt-10">
-                    
-                    <div class="w-[200px] h-[60px] mx-auto block -mb-[25px] relative -left-[45px] -rotate-[5deg]">
-                        <svg viewBox="0 0 200 60" class="overflow-visible">
-                            <path id="benefitingCurve" d="M 10,50 Q 100,0 190,50" fill="transparent" />
-                            <text class="font-script font-bold fill-white text-[19px]" style="font-family: 'Dancing Script', cursive;">
-                                <textPath href="#benefitingCurve" startOffset="50%" text-anchor="middle">
-                                    Benefiting
-                                </textPath>
-                            </text>
-                        </svg>
+                <img src="https://i.ibb.co/mFT7Qb5Y/wuft-maw.png" alt="Wish Upon a Food Truck Benefiting Make-A-Wish" class="main-event-logo">
+                <a href="#" class="bg-yellow-star rounded-[25px] block w-full md:min-w-[500px] px-8 py-4 transition-transform hover:scale-105 shadow-xl">
+                    <div class="text-center font-display text-[40px] md:text-[52px] leading-[1] uppercase text-red-title shadow-text-black-hard">
+                        SPONSOR<br>APPLICATION
                     </div>
-
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/MAW_Standard_RGB.png/960px-MAW_Standard_RGB.png?20180905215053" alt="Make-A-Wish" class="h-[65px] brightness-0 invert scale-125 mx-auto">
-                    
-                    <div class="text-[9px] font-bold uppercase tracking-widest mt-2 leading-snug">
-                        Philadelphia, Delaware<br>&amp; Susquehanna Valley
-                    </div>
-                </div>
-
-                <div class="relative top-[130px] md:top-[70px] md:-left-[60px] z-20 mt-12 md:mt-6 w-full md:w-auto">
-                    <a href="#" class="bg-yellow-star rounded-[25px] block w-full md:min-w-[500px] px-8 py-4 transition-transform hover:scale-105 shadow-xl">
-                        <div class="text-center font-display text-[40px] md:text-[52px] leading-[1] uppercase text-red-title shadow-text-black-hard">
-                            SPONSOR<br>APPLICATION
-                        </div>
-                    </a>
-                </div>
-
+                </a>
             </div>
         </div>
 
