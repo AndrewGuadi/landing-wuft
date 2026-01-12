@@ -122,11 +122,9 @@
     <div class="nav-panel" data-nav-panel>
         <ul class="nav-links flex flex-wrap justify-center items-center gap-4 md:gap-8 list-none">
             <li><a href="{{ url_for('main.home') }}" class="text-gray-800 hover:text-red-title transition-colors">Home</a></li>
-            <li><a href="{{ url_for('main.sponsor_page') }}" class="text-gray-800 hover:text-red-title transition-colors">Sponsor</a></li>
+            <li><a href="{{ url_for('main.sponsor_page') }}" class="text-gray-800 hover:text-red-title transition-colors">Sponsors</a></li>
             <li><a href="{{ url_for('main.food_vendor_page') }}" class="text-gray-800 hover:text-red-title transition-colors">Food Trucks</a></li>
-            <li><a href="#" class="text-gray-800 hover:text-red-title transition-colors">Table Vendors</a></li>
-            <li><a href="#" class="text-gray-800 hover:text-red-title transition-colors">Volunteer</a></li>
-            <li><a href="#" class="text-gray-800 hover:text-red-title transition-colors">Contact Us</a></li>
+            <li><a href="{{ url_for('main.liability_application') }}" class="text-gray-800 hover:text-red-title transition-colors">Liability Form</a></li>
             <li>
                 <a href="#" class="btn-donate bg-red-btn text-white px-6 py-2 rounded-full font-extrabold text-xs tracking-wide flex items-center gap-1 hover:opacity-90">
                     ♥ DONATE

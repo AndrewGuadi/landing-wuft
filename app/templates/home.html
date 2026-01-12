@@ -304,8 +304,6 @@
             color: var(--bg-blue);
             font-family: 'Anton', sans-serif;
             position: relative;
-            left: -188px;
-            top: 100px;
             font-size: 32px;
             line-height: 1.1;
             text-transform: uppercase;
@@ -319,6 +317,13 @@
         }
 
         .btn-sponsor:hover { transform: scale(1.05); }
+
+        .main-event-logo {
+            width: 100%;
+            max-width: 460px;
+            height: auto;
+            margin-bottom: 24px;
+        }
 
         /* --- DECORATIONS --- */
         .shooting-lines {
@@ -655,7 +660,7 @@
 
         /* RESPONSIVE */
         @media (max-width: 900px) {
-            .hero-container { flex-direction: column; gap: 20px; }
+            .hero-container { flex-direction: column-reverse; gap: 20px; }
             .star-wrapper { width: 350px; height: 350px; transform: rotate(-10deg); }
             .block-title { font-size: 50px; }
             .script-top { margin-left: 0; }
@@ -702,39 +707,7 @@
             </div>
 
             <div class="right-content">
-                
-                <div class="title-group">
-                    <svg class="shooting-lines" viewBox="0 0 400 200" style="position:absolute; top:-50px; left:-350px; width:140%; z-index:-1;">
-                         <path d="M20,80 Q80,10 160,20" fill="none" stroke="#FAC04D" stroke-width="2"></path>
-                         <path d="M10,90 Q70,20 150,30" fill="none" stroke="#FAC04D" stroke-width="1"></path>
-                         <polygon points="160,6 166,21 181,21 169,30 172,45 160,36 148,45 151,30 139,21 154,21" fill="#FAC04D"></polygon>
-                         
-                         <path d="M380,80 Q320,100 280,140" fill="none" stroke="#FAC04D" stroke-width="2"></path>
-                         <path d="M390,70 Q330,90 290,130" fill="none" stroke="#FAC04D" stroke-width="1"></path>
-                         <polygon points="280,140 285,142 288,147 283,148 280,153 277,148 272,147 275,142 275,142" fill="#FAC04D"></polygon>
-                    </svg>
-
-                    <div class="script-top">Wish Upon A</div>
-                    <div class="block-title">FOOD TRUCK</div>
-                    <div class="script-bottom">Festival</div>
-                </div>
-
-                <div class="maw-logo">
-                    <div class="maw-text-curve">
-                        <svg viewBox="0 0 200 60">
-                            <path id="benefitingCurve" d="M 10,50 Q 100,0 190,50" fill="transparent" />
-                            <text>
-                                <textPath href="#benefitingCurve" startOffset="50%" text-anchor="middle">
-                                    Benefiting
-                                </textPath>
-                            </text>
-                        </svg>
-                    </div>
-
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/MAW_Standard_RGB.png/960px-MAW_Standard_RGB.png?20180905215053" alt="Make-A-Wish" class="maw-img">
-                    <div class="maw-sub">Philadelphia, Delaware<br>&amp; Susquehanna Valley</div>
-                </div>
-
+                <img src="https://i.ibb.co/mFT7Qb5Y/wuft-maw.png" alt="Wish Upon a Food Truck Benefiting Make-A-Wish" class="main-event-logo">
                 <a href="{{ url_for('main.sponsor_page') }}" class="btn-sponsor">
                     BECOME A<br>SPONSOR!
                 </a>
