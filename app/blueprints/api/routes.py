@@ -5,6 +5,8 @@ from flask import Blueprint, jsonify, request
 from werkzeug.exceptions import BadRequest
 
 from ...services import email_service, pipeline_service, stripe_service, teams_service
+from ...extensions import db
+from ...models import SponsorshipApplication
 
 logger = logging.getLogger(__name__)
 
@@ -46,6 +48,15 @@ def stripe_webhook():
     try:
         payload = request.get_data(as_text=False)
         result = stripe_service.handle_webhook(payload, signature)
+        if result.get("type") == "checkout.session.completed":
+            metadata = (result.get("data") or {}).get("object", {}).get("metadata", {})
+            application_id = metadata.get("application_id")
+            if application_id:
+                application = SponsorshipApplication.query.get(int(application_id))
+                if application:
+                    application.payment_status = "paid"
+                    application.status = "paid"
+                    db.session.commit()
         return jsonify(result), 200
     except ValueError as exc:
         return _handle_service_error(exc, 400)
