@@ -1,0 +1,45 @@
+Do you have the logo files I sent to you? It doesn't appear the same.
+
+I can send you the image of the Star with the date, time and location. It looks hard to read the way it appears right now.
+
+ ✅The THANK YOU 2026 Sponsors - Can we unpublish that until we actually have sponsors? It's fine how it looks though!
+
+ ✅This should go to the landing page where it lists all the sponsorship levels - not the application.
+<image.png>
+
+FOOTER: 
+The logo looks odd with the background not matching the footer color.
+ ✅I can't see the SM icons unless I hover over them.
+
+/sponsor Landing
+
+ ✅The "Ready to become a partner?" button is too close to the "benefiting Make-A-Wish" logo. When you hover over the button, it covers the logo. And the spacing is off in general between the WUFT logo and the MAW logo. This occurs on the /sponsorship-application page too.
+
+<image.png>
+
+ ✅Can you make this one line or maybe move "is more than brand visibility" down to the second line so it is more even. It looks odd that visibility is by itself.
+
+<image.png>
+
+ ✅I love the Sponsor Tiers - great work on those!!
+
+/sponsor-application
+
+ ✅This page looks incomplete. It has the areas to input the contact information but it's missing this:
+<image.png>
+
+/food-vendor
+
+ ✅I don't think the yellow button at the top needs to link to anything. It's more or less the title of the landing page.
+
+ ✅The blue "Apply Now Limited Spots Available" Button doesn't go anywhere. It should point to the application.
+
+/food-vendor-application
+
+ ✅I see you have moved this around - that's totally fine. I just want to make sure we capture the circled details so that we can accurately describe their offerings in our marketing. Can you put "Food Truck Details" under LinkedIn Handle and move "Proposed Menu Items under it and above Service Window Location? I think that will flow better.
+<image.png>
+
+ ✅I don't see the Complete Affirmation & Liability Release landing page. So, the idea is that the requirement is for them to Complete the application AND the Affirmation & Liability Release in order to Submit the application. The logos and cert of ins. are important but I don't think they are a requirement right away - @Parul Luthra - agree? We just won't be able to give them the shoutouts until we receive the logos and WE NEED the Cert of ins for them to participate. 
+
+
+Also, the "Submit Application" button - which is on the Liability Release page, should direct them to payment.
