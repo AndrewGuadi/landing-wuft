@@ -185,7 +185,7 @@ def sponsorship_application():
         send_placeholder_email("Sponsorship application received", form.email.data)
         payload = {
             "mode": "payment",
-            "success_url": "https://www.wishuponafoodtruck.com/sponsorship-confirmation",
+            "success_url": "https://www.wishuponafoodtruck.com/stripe-confirmation",
             "cancel_url": "https://www.wishuponafoodtruck.com/sponsorship-application",
             "customer_email": form.email.data,
             "line_items": [
@@ -220,6 +220,11 @@ def sponsorship_application():
 @main_bp.get("/sponsorship-confirmation")
 def sponsorship_confirmation():
     return render_template("sponsorship-confirmation.html")
+
+
+@main_bp.get("/stripe-confirmation")
+def stripe_confirmation():
+    return render_template("stripe-confirmation.html")
 
 
 @main_bp.route("/liability-application", methods=["GET", "POST"])
