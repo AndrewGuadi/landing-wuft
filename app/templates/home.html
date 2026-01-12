@@ -632,7 +632,7 @@
         .social-icon-svg {
             width: 30px;
             height: 30px;
-            fill: white;
+            fill: var(--bg-blue);
             transition: fill 0.3s, transform 0.3s;
         }
         
@@ -860,49 +860,6 @@
 
     </section>
 
-    <section class="sponsor-section">
-        <h2 class="sponsor-title">THANK YOU <span class="year">2026</span> SPONSORS!</h2>
-        
-        <div class="carousel-wrapper">
-            <div class="nav-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="black"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-            </div>
-
-            <div class="logo-row">
-                <div class="sponsor-card">
-                    <div class="card-inner">
-                         <div style="text-align:center; color:#555;">
-                            <span style="font-size:30px; display:block; line-height:1;">🏠</span>
-                            <strong style="font-size:24px; color:#555;">gift</strong><span style="color:#d00;">CPAs</span>
-                            <div style="font-size:10px; text-transform:uppercase;">Small Business Advisors</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="sponsor-card">
-                    <div class="card-inner">
-                        <div style="font-family:sans-serif; font-size:40px; font-weight:900; color:black; letter-spacing:-1px;">
-                            Optum
-                        </div>
-                    </div>
-                </div>
-
-                <div class="sponsor-card">
-                    <div class="card-inner">
-                        <div style="display:flex; align-items:center; gap:5px;">
-                            <span style="font-family:sans-serif; font-size:32px; font-weight:800; color:black;">Capital</span>
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="#0072CE"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-             <div class="nav-arrow">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="black"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-            </div>
-        </div>
-    </section>
-
     <section class="why-gather">
         <h2 class="why-title">
             <span class="red">WHY</span> <span class="blue">WE GATHER</span>
@@ -951,7 +908,7 @@
         </p>
         
         <div class="cta-buttons">
-            <a href="{{ url_for('main.sponsorship_application') }}" class="cta-btn">
+            <a href="{{ url_for('main.sponsor_page') }}" class="cta-btn">
                 Sponsorship<br>Opportunities
             </a>
             <a href="{{ url_for('main.sponsorship_application_pdf') }}" class="cta-btn">
