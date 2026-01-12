@@ -1,19 +1,219 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Team! | Wish Upon a Food Truck</title>
+    
+    <!-- Fonts from your website -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@700&family=Montserrat:wght@500;600;700;800;900&family=Paytone+One&display=swap" rel="stylesheet">
 
-{% block title %}Payment Confirmation{% endblock %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        display: ['Paytone One', 'sans-serif'],
+                        script: ['Dancing Script', 'cursive'],
+                        anton: ['Anton', 'sans-serif'],
+                    },
+                    colors: {
+                        'blue-deep': '#084B70',
+                        'yellow-star': '#FAC04D',
+                        'red-btn': '#FF6B6B',
+                        'red-title': '#FF6666',
+                        'text-dark': '#222222',
+                    },
+                    dropShadow: {
+                        'hard': '4px 4px 0px rgba(0,0,0,0.15)',
+                    }
+                }
+            }
+        }
+    </script>
 
-{% block body_class %}bg-[#fcfcfc] text-text-dark font-sans overflow-x-hidden flex flex-col min-h-screen{% endblock %}
+    <style>
+        /* Custom Text Shadows matching your branding */
+        .shadow-text-red {
+            text-shadow: 
+                1px 1px 0px #3E1010,
+                2px 2px 0px #3E1010,
+                3px 3px 0px #3E1010,
+                4px 4px 0px #3E1010,
+                5px 5px 0px #3E1010,
+                6px 6px 0px rgba(0,0,0,0.3);
+        }
+        .shadow-text-black-hard {
+            text-shadow: 3px 3px 0px #000000;
+        }
+        .text-stroke-white {
+            -webkit-text-stroke: 0.35px #ffffff;
+        }
+        
+        /* Print Styles */
+        @media print {
+            nav, footer, .no-print { display: none !important; }
+            body { background: white; color: black; }
+            .hero-bg { background: white !important; color: black !important; min-height: auto !important; padding: 20px !important; }
+            .print-text-dark { color: black !important; -webkit-text-stroke: 0; text-shadow: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-[#fcfcfc] text-text-dark font-sans overflow-x-hidden flex flex-col min-h-screen">
 
-{% block content %}
-<section class="px-6 py-16">
-    <div class="max-w-3xl mx-auto text-center">
-        <h1 class="font-display text-4xl md:text-5xl text-blue-deep mb-6">Payment Confirmed</h1>
-        <p class="text-lg md:text-xl text-gray-700 mb-6">
-            Thanks for your sponsorship payment! We will reach out soon with next steps.
-        </p>
-        <a href="{{ url_for('main.sponsor_page') }}" class="inline-flex items-center justify-center px-8 py-3 rounded-full bg-red-btn text-white font-semibold shadow-md hover:shadow-lg transition">
-            Back to Sponsorships
-        </a>
-    </div>
-</section>
-{% endblock %}
+    <!-- Navigation -->
+    <nav class="flex flex-col md:flex-row justify-between items-center px-[5%] py-3 bg-white text-sm font-bold text-gray-800 shadow-sm relative z-20 gap-4 md:gap-0">
+        <div class="flex items-center gap-2 text-red-title font-black text-base uppercase tracking-wide">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#084B70" class="mr-1">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+            </svg>
+            Wish Upon a Food Truck
+        </div>
+        <ul class="flex flex-wrap justify-center items-center gap-4 md:gap-8 list-none">
+            <li><a href="/" class="text-gray-800 hover:text-red-title transition-colors">Home</a></li>
+            <li><a href="#" class="text-gray-800 hover:text-red-title transition-colors">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg bg-blue-deep min-h-[500px] relative flex justify-center items-center py-16 px-5 text-white overflow-hidden">
+        
+        <div class="flex flex-col md:flex-row w-full max-w-7xl justify-center items-center gap-10 relative z-10">
+            
+            <!-- Left Side: The Star Badge -->
+            <div class="relative w-[300px] h-[300px] shrink-0 flex justify-center items-center md:rotate-0 -rotate-6 scale-90 md:scale-100 transition-transform">
+                <img src="https://i.ibb.co/0y3wNqKB/star.png" alt="Star Background" class="absolute top-0 left-0 w-full h-full z-10 object-contain scale-150 drop-shadow-hard">
+                
+                <div class="relative z-20 text-center text-white -rotate-6">
+                    <span class="block font-display font-black text-2xl leading-tight text-blue-deep mt-6 mb-1 text-stroke-white shadow-sm md:-rotate-6">
+                        OFFICIAL
+                    </span>
+                    <div class="font-display text-4xl leading-none text-white uppercase shadow-sm md:-rotate-6 mb-1 relative left-0 tracking-wide top-2 shadow-text-black-hard">
+                        PARTNER
+                    </div>
+                    <div class="font-display font-bold text-xl uppercase md:-rotate-6 relative top-4 text-blue-deep text-stroke-white">
+                        2026
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: The Welcome Text -->
+            <div class="flex-1 flex flex-col items-center relative text-center w-full">
+                
+                <div class="relative mb-2 w-full mt-8 md:mt-0">
+                    <div class="font-script text-6xl text-yellow-star relative block -mb-6 md:-ml-24 z-10 -rotate-6">Welcome to the</div>
+                    <div class="font-display text-[50px] md:text-[78px] text-red-title uppercase tracking-wider leading-none relative z-0 shadow-text-red">FAMILY!</div>
+                </div>
+
+                <div class="my-4 mb-8 text-center relative mt-6 max-w-lg mx-auto">
+                    <p class="text-white text-lg md:text-xl font-bold leading-relaxed">
+                        Thank you, <span class="text-yellow-star border-b-2 border-yellow-star pb-1">{{ company }}</span>!
+                    </p>
+                    <p class="text-white/90 text-base md:text-lg mt-4 font-medium">
+                        Your support as a <span class="text-yellow-star font-bold uppercase">{{ tier }}</span> helps us grant life-changing wishes for children in our community.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Wave Divider at Bottom -->
+        <div class="absolute -bottom-px left-0 w-full overflow-hidden leading-[0]">
+            <svg class="relative block w-[calc(100%+1.3px)] h-[50px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,40 C300,60 600,0 1200,40 L1200,120 L0,120 Z" class="fill-[#fcfcfc]"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Next Steps Section -->
+    <section class="py-16 px-5 bg-[#fcfcfc] flex-grow">
+        <div class="max-w-4xl mx-auto">
+            
+            <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 border-t-8 border-yellow-star relative overflow-hidden">
+                <!-- Background Icon Opacity -->
+                <div class="absolute top-0 right-0 opacity-5 transform translate-x-1/4 -translate-y-1/4 pointer-events-none">
+                    <svg width="400" height="400" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                </div>
+
+                <h2 class="font-display text-3xl md:text-4xl text-blue-deep uppercase mb-8 text-center md:text-left">
+                    Next Steps
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div>
+                        <div class="flex items-start gap-4 mb-6">
+                            <div class="bg-red-btn text-white font-bold rounded-full w-10 h-10 flex items-center justify-center shrink-0 text-xl shadow-md">1</div>
+                            <div>
+                                <h4 class="font-bold text-xl text-blue-deep mb-1">Check Your Email</h4>
+                                <p class="text-gray-600 font-medium">We've sent a formal receipt and tax-deductible confirmation to your inbox.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 mb-6">
+                            <div class="bg-red-btn text-white font-bold rounded-full w-10 h-10 flex items-center justify-center shrink-0 text-xl shadow-md">2</div>
+                            <div>
+                                <h4 class="font-bold text-xl text-blue-deep mb-1">Prepare Your Assets</h4>
+                                <p class="text-gray-600 font-medium">Our team will contact you within 48 hours to collect your high-res logo (.png or .eps) for signage.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-deep/5 rounded-2xl p-6 text-center flex flex-col justify-center items-center">
+                        <h4 class="font-bold text-lg text-blue-deep mb-4 uppercase tracking-wide">Need a copy for your records?</h4>
+                        
+                        <button onclick="window.print()" class="bg-blue-deep text-white font-display text-xl uppercase px-8 py-3 rounded-xl hover:scale-105 transition-transform shadow-lg mb-3 w-full md:w-auto">
+                            Print Receipt
+                        </button>
+                        
+                        <a href="/" class="text-sm font-bold text-gray-500 hover:text-red-btn transition-colors mt-2 underline">
+                            Return to Homepage
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Make-A-Wish Logo -->
+                <div class="mt-10 pt-8 border-t border-gray-100 flex justify-center md:justify-start items-center gap-4 opacity-80">
+                    <span class="text-xs font-bold uppercase tracking-widest text-gray-400 text-right">Benefiting</span>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/MAW_Standard_RGB.png/960px-MAW_Standard_RGB.png?20180905215053" alt="Make-A-Wish" class="h-8 grayscale opacity-60">
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-blue-deep border-t-[2px] border-dotted border-white/50 pt-20 px-5 pb-10 text-white font-sans mt-auto no-print">
+        <div class="flex flex-wrap justify-between items-start max-w-[1100px] mx-auto mb-16 gap-10">
+            <div class="flex-1 min-w-[250px] text-center md:text-left">
+                <img src="https://i.ibb.co/j9S8LXRb/Gemini-Generated-Image-jqsetxjqsetxjqse.png" alt="Wish Upon A Food Truck Festival Logo" class="max-w-[220px] h-auto mx-auto md:mx-0">
+            </div>
+            <div class="flex-1 min-w-[200px] text-center md:text-left">
+                <h4 class="text-yellow-star font-extrabold uppercase text-xl mb-6 tracking-wide">Connect</h4>
+                <a href="mailto:hello@wishuponafoodtruck.com" class="text-white font-semibold text-base block mb-8">hello@wishuponafoodtruck.com</a>
+                <div class="flex justify-center md:justify-start gap-5 mt-8">
+                    <!-- Social Icons (Simplified for display) -->
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                            <span class="text-blue-deep font-bold text-xs">FB</span>
+                        </div>
+                        <div class="w-10 h-10 bg-white rounded-md flex items-center justify-center">
+                            <span class="text-blue-deep font-bold text-xs">IG</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-[13px] max-w-[900px] mx-auto leading-relaxed opacity-80 font-medium">
+            Make-A-Wish Foundation of Philadelphia, Delaware and Susquehanna Valley is a Pennsylvania nonprofit corporation exempt from federal income tax under Section (c)(3) of the Internal Revenue Code.
+        </div>
+    </footer>
+
+</body>
+</html>
