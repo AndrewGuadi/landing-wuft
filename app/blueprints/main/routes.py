@@ -22,6 +22,45 @@ from app.forms import (
 )
 from app.models import FoodVendorApplication, LiabilityApplication, SponsorshipApplication
 from app.services.notifications import send_placeholder_email
+from app.services import stripe_service
+
+SPONSORSHIP_TIERS = {
+    "wish_granter": {
+        "name": "Wish Granter Sponsor",
+        "amount": 1000000,
+        "description": "Exclusive Presenting Sponsor. Grants one wish.",
+    },
+    "wonders_wishes": {
+        "name": "Wonders & Wishes Sponsor",
+        "amount": 500000,
+        "description": "Exclusive Family Fun Zone sponsor.",
+    },
+    "food_truck_champion": {
+        "name": "Food Truck Champion",
+        "amount": 350000,
+        "description": "Fueling the fun & flavor. Limited to 3.",
+    },
+    "dream_maker": {
+        "name": "Dream Maker Sponsor",
+        "amount": 250000,
+        "description": "Logo on ads and volunteer shirts.",
+    },
+    "wish_builder": {
+        "name": "Wish Builder Sponsor",
+        "amount": 100000,
+        "description": "Yard sign, table, and shirt logo.",
+    },
+    "hope_helper": {
+        "name": "Hope Helper Sponsor",
+        "amount": 50000,
+        "description": "Yard sign, table, social recognition.",
+    },
+    "joy_giver": {
+        "name": "Joy Giver Sponsor",
+        "amount": 25000,
+        "description": "Event table and social recognition.",
+    },
+}
 from app.services.uploads import save_uploaded_file
 from app.services.auth_store import authenticate_user
 
@@ -120,6 +159,13 @@ def food_vendor_application():
 def sponsorship_application():
     form = SponsorshipApplicationForm()
     if form.validate_on_submit():
+        support_level = form.support_level.data
+        tier = SPONSORSHIP_TIERS.get(support_level)
+        support_labels = dict(form.support_level.choices)
+        support_label = support_labels.get(support_level, support_level)
+        if tier is None:
+            flash("Please select a valid sponsorship tier.", "error")
+            return redirect(url_for("main.sponsorship_application"))
         logo_filename = save_uploaded_file(form.logo_file.data, "sponsorship")
         application = SponsorshipApplication(
             business_name=form.business_name.data,
@@ -130,16 +176,55 @@ def sponsorship_application():
             facebook=form.facebook.data,
             instagram=form.instagram.data,
             linkedin=form.linkedin.data,
-            support_level=form.support_level.data,
+            support_level=support_level,
             logo_filename=logo_filename,
             payment_status="pending",
         )
         db.session.add(application)
         db.session.commit()
         send_placeholder_email("Sponsorship application received", form.email.data)
-        flash("Thanks for applying to sponsor the festival! We'll follow up soon.", "success")
-        return redirect(url_for("main.sponsorship_application"))
+        payload = {
+            "mode": "payment",
+            "success_url": "https://www.wishuponafoodtruck.com/stripe-confirmation",
+            "cancel_url": "https://www.wishuponafoodtruck.com/sponsorship-application",
+            "customer_email": form.email.data,
+            "line_items": [
+                {
+                    "price_data": {
+                        "currency": "usd",
+                        "unit_amount": tier["amount"],
+                        "product_data": {
+                            "name": tier["name"],
+                            "description": tier["description"],
+                        },
+                    },
+                    "quantity": 1,
+                }
+            ],
+            "metadata": {
+                "support_level": support_level,
+                "support_label": support_label,
+                "application_id": str(application.id),
+            },
+        }
+        try:
+            session = stripe_service.create_checkout_session(payload)
+        except ValueError as exc:
+            flash(f"Stripe checkout could not be started: {exc}", "error")
+            return redirect(url_for("main.sponsorship_application"))
+        flash("Thanks for applying! Redirecting you to Stripe to complete payment.", "success")
+        return redirect(session["url"])
     return render_template("sponsorship-application.html", form=form)
+
+
+@main_bp.get("/sponsorship-confirmation")
+def sponsorship_confirmation():
+    return render_template("sponsorship-confirmation.html")
+
+
+@main_bp.get("/stripe-confirmation")
+def stripe_confirmation():
+    return render_template("stripe-confirmation.html")
 
 
 @main_bp.route("/liability-application", methods=["GET", "POST"])

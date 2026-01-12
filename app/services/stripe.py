@@ -48,9 +48,11 @@ def handle_webhook(payload: Union[str, bytes], signature: str) -> Dict[str, Any]
     except (ValueError, stripe_error.SignatureVerificationError) as exc:
         raise ValueError(f"Invalid Stripe webhook: {exc}") from exc
 
+    event_payload = event.to_dict() if hasattr(event, "to_dict") else event
     return {
         "status": "processed",
         "provider": "stripe",
-        "type": event.get("type"),
-        "id": event.get("id"),
+        "type": event_payload.get("type"),
+        "id": event_payload.get("id"),
+        "data": event_payload.get("data"),
     }
