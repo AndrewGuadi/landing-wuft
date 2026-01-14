@@ -82,6 +82,24 @@ def stripe_webhook():
             application_type = metadata.get("application_type", "sponsorship")
             if payment_status == "paid" and application_id:
                 _mark_application_paid(application_type, int(application_id))
+                if application_type in {"sponsorship", "sponsor"}:
+                    customer_email = session_data.get("customer_email")
+                    if not customer_email:
+                        customer_details = session_data.get("customer_details") or {}
+                        customer_email = customer_details.get("email", "")
+                    support_label = metadata.get("support_label", "Sponsor")
+                    if customer_email:
+                        try:
+                            email_service.send_sponsorship_thank_you(
+                                recipient=customer_email,
+                                sponsor_tier=support_label,
+                            )
+                        except Exception as exc:  # pragma: no cover - avoid webhook failure on email issues
+                            logger.warning(
+                                "Failed to send sponsorship thank you email",
+                                exc_info=exc,
+                                extra={"recipient": customer_email},
+                            )
         return jsonify(result), 200
     except ValueError as exc:
         return _handle_service_error(exc, 400)

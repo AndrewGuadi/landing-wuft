@@ -31,5 +31,11 @@ class Config:
     DEFAULT_EMAIL_SENDER = os.getenv("DEFAULT_EMAIL_SENDER", "hello@wishuponafoodtruck.com")
     SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", "")
     SENDGRID_SENDER = os.getenv("SENDGRID_SENDER", DEFAULT_EMAIL_SENDER)
+    MAIL_SERVER = os.getenv("MAIL_SERVER", "")
+    MAIL_PORT = int(os.getenv("MAIL_PORT", "587"))
+    MAIL_USE_TLS = os.getenv("MAIL_USE_TLS", "true").lower() == "true"
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME", "")
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD", "")
+    MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER", DEFAULT_EMAIL_SENDER)
     PIPELINE_API_URL = os.getenv("PIPELINE_API_URL", "")
     PIPELINE_API_TOKEN = os.getenv("PIPELINE_API_TOKEN", "")
