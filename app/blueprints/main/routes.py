@@ -29,36 +29,43 @@ SPONSORSHIP_TIERS = {
         "name": "Wish Granter Sponsor",
         "amount": 1000000,
         "description": "Exclusive Presenting Sponsor. Grants one wish.",
+        "product": "sponsor_wish_granter",
     },
     "wonders_wishes": {
         "name": "Wonders & Wishes Sponsor",
         "amount": 500000,
         "description": "Exclusive Family Fun Zone sponsor.",
+        "product": "sponsor_wonders_wishes",
     },
     "food_truck_champion": {
         "name": "Food Truck Champion",
         "amount": 350000,
         "description": "Fueling the fun & flavor. Limited to 3.",
+        "product": "sponsor_food_truck_champion",
     },
     "dream_maker": {
         "name": "Dream Maker Sponsor",
         "amount": 250000,
         "description": "Logo on ads and volunteer shirts.",
+        "product": "sponsor_dream_maker",
     },
     "wish_builder": {
         "name": "Wish Builder Sponsor",
         "amount": 100000,
         "description": "Yard sign, table, and shirt logo.",
+        "product": "sponsor_wish_builder",
     },
     "hope_helper": {
         "name": "Hope Helper Sponsor",
         "amount": 50000,
         "description": "Yard sign, table, social recognition.",
+        "product": "sponsor_hope_helper",
     },
     "joy_giver": {
         "name": "Joy Giver Sponsor",
         "amount": 25000,
         "description": "Event table and social recognition.",
+        "product": "sponsor_joy_giver",
     },
 }
 from app.services.uploads import save_uploaded_file
@@ -191,19 +198,8 @@ def sponsorship_application():
             ),
             "cancel_url": "https://www.wishuponafoodtruck.com/sponsorship-application",
             "customer_email": form.email.data,
-            "line_items": [
-                {
-                    "price_data": {
-                        "currency": "usd",
-                        "unit_amount": tier["amount"],
-                        "product_data": {
-                            "name": tier["name"],
-                            "description": tier["description"],
-                        },
-                    },
-                    "quantity": 1,
-                }
-            ],
+            "product": tier["product"],
+            "quantity": 1,
             "metadata": {
                 "application_type": "sponsorship",
                 "support_level": support_level,
