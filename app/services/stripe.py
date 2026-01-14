@@ -20,6 +20,9 @@ def _get_price_map() -> Dict[str, str]:
         "sponsor_wish_builder": current_app.config.get("STRIPE_PRICE_SPONSOR_WISH_BUILDER", ""),
         "sponsor_hope_helper": current_app.config.get("STRIPE_PRICE_SPONSOR_HOPE_HELPER", ""),
         "sponsor_joy_giver": current_app.config.get("STRIPE_PRICE_SPONSOR_JOY_GIVER", ""),
+        "sponsor_every_dream_matters": current_app.config.get(
+            "STRIPE_PRICE_SPONSOR_EVERY_DREAM_MATTERS", ""
+        ),
     }
 
 
