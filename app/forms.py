@@ -41,13 +41,6 @@ class SponsorshipApplicationForm(BaseContactForm):
         ],
         validators=[DataRequired()],
     )
-    logo_file = FileField(
-        "Upload Your Logos",
-        validators=[
-            FileRequired(),
-            FileAllowed(ALLOWED_UPLOAD_EXTENSIONS, "Upload a valid logo file."),
-        ],
-    )
     submit = SubmitField("Complete Application")
 
 class FoodVendorApplicationForm(BaseContactForm):

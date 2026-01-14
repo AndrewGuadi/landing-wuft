@@ -119,22 +119,10 @@
                             </div>
                         </dl>
                     </div>
-
-                    <div>
-                        <h3 class="text-base font-semibold text-slate-800">Uploads</h3>
-                        <dl class="mt-3 space-y-2 text-sm">
-                            {% if application_type == "sponsor" %}
-                                <div>
-                                    <dt class="text-slate-500">Logo</dt>
-                                    <dd>
-                                        {% if application.logo_filename %}
-                                            <a class="text-blue-deep font-semibold hover:underline" href="{{ url_for('main.admin_upload_download', category='sponsorship', filename=application.logo_filename) }}">Download logo</a>
-                                        {% else %}
-                                            -
-                                        {% endif %}
-                                    </dd>
-                                </div>
-                            {% else %}
+                    {% if application_type == "vendor" %}
+                        <div>
+                            <h3 class="text-base font-semibold text-slate-800">Uploads</h3>
+                            <dl class="mt-3 space-y-2 text-sm">
                                 <div>
                                     <dt class="text-slate-500">Logo</dt>
                                     <dd>
@@ -155,9 +143,9 @@
                                         {% endif %}
                                     </dd>
                                 </div>
-                            {% endif %}
-                        </dl>
-                    </div>
+                            </dl>
+                        </div>
+                    {% endif %}
                 </div>
             {% endif %}
         </section>

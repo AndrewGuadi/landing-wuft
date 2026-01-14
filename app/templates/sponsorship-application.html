@@ -409,20 +409,6 @@
                     {% endif %}
                 </section>
 
-                <section class="py-12 px-5 bg-[#fcfcfc] text-center hidden" id="upload-section" aria-hidden="true">
-                    <div class="max-w-3xl mx-auto">
-                        <label class="bg-blue-deep rounded-2xl block w-full py-8 mb-6 transition-transform hover:-rotate-1 hover:scale-105 shadow-xl cursor-pointer">
-                            <div class="text-center font-display text-4xl md:text-5xl leading-[1] uppercase text-red-title shadow-text-black-hard">
-                                UPLOAD YOUR<br>LOGOS
-                            </div>
-                            {{ form.logo_file(class="sr-only", id="logo-file", accept=".svg,.png,.jpg,.jpeg,.eps,.esp,.webp", required=true) }}
-                        </label>
-                        {% if form.logo_file.errors %}
-                            <p class="text-red-600 text-sm mb-4">{{ form.logo_file.errors[0] }}</p>
-                        {% endif %}
-                    </div>
-                </section>
-
                 <section class="py-4 px-5 bg-[#fcfcfc] text-center hidden" id="submit-section" aria-hidden="true">
                     <div class="max-w-3xl mx-auto">
                         <button type="submit" class="bg-blue-deep rounded-2xl block w-full py-8 mb-8 transition-transform hover:-rotate-1 hover:scale-105 shadow-xl">
@@ -449,10 +435,8 @@
                 document.getElementById("email"),
             ];
             const supportSection = document.getElementById("support-section");
-            const uploadSection = document.getElementById("upload-section");
             const submitSection = document.getElementById("submit-section");
             const supportInputs = supportSection.querySelectorAll("input[type='radio']");
-            const logoInput = document.getElementById("logo-file");
             let supportOpened = false;
 
             const updateSupportVisibility = () => {
@@ -468,33 +452,20 @@
                 } else {
                     supportSection.classList.add("hidden");
                     supportSection.setAttribute("aria-hidden", "true");
-                    uploadSection.classList.add("hidden");
-                    submitSection.classList.add("hidden");
-                }
-            };
-
-            const updateUploadVisibility = () => {
-                const supportSelected = Array.from(supportInputs).some((input) => input.checked);
-                
-                // --- NEW: Toggle Grayscale Effect ---
-                if (supportSelected) {
-                    supportSection.classList.add('has-selection');
-                    uploadSection.classList.remove("hidden");
-                    uploadSection.setAttribute("aria-hidden", "false");
-                } else {
-                    supportSection.classList.remove('has-selection');
-                    uploadSection.classList.add("hidden");
-                    uploadSection.setAttribute("aria-hidden", "true");
                     submitSection.classList.add("hidden");
                 }
             };
 
             const updateSubmitVisibility = () => {
-                const hasFile = logoInput && logoInput.files && logoInput.files.length > 0;
-                if (hasFile) {
+                const supportSelected = Array.from(supportInputs).some((input) => input.checked);
+                
+                // --- NEW: Toggle Grayscale Effect ---
+                if (supportSelected) {
+                    supportSection.classList.add('has-selection');
                     submitSection.classList.remove("hidden");
                     submitSection.setAttribute("aria-hidden", "false");
                 } else {
+                    supportSection.classList.remove('has-selection');
                     submitSection.classList.add("hidden");
                     submitSection.setAttribute("aria-hidden", "true");
                 }
@@ -505,15 +476,11 @@
                 field.addEventListener("blur", updateSupportVisibility);
             });
             supportInputs.forEach((input) => {
-                input.addEventListener("change", updateUploadVisibility);
+                input.addEventListener("change", updateSubmitVisibility);
             });
-            if (logoInput) {
-                logoInput.addEventListener("change", updateSubmitVisibility);
-            }
 
             // Run checks on load in case of browser refresh/back button filling forms
             updateSupportVisibility();
-            updateUploadVisibility();
             updateSubmitVisibility();
         });
     </script>
