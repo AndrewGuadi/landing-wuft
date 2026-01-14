@@ -79,6 +79,31 @@ def home():
     return render_template("home.html")
 
 
+@main_bp.get("/donate")
+def donate():
+    payload = {
+        "mode": "payment",
+        "success_url": (
+            "https://www.wishuponafoodtruck.com/stripe-confirmation"
+            "?session_id={CHECKOUT_SESSION_ID}"
+        ),
+        "cancel_url": "https://www.wishuponafoodtruck.com/",
+        "product": "sponsor_every_dream_matters",
+        "quantity": 1,
+        "metadata": {
+            "application_type": "donation",
+            "support_level": "every_dream_matters",
+            "support_label": "Every Dream Matters Donation",
+        },
+    }
+    try:
+        session = stripe_service.create_checkout_session(payload)
+    except ValueError as exc:
+        flash(f"Stripe checkout could not be started: {exc}", "error")
+        return redirect(url_for("main.home"))
+    return redirect(session["url"])
+
+
 @main_bp.get("/sponsor")
 def sponsor_page():
     return render_template("sponsor-page.html")
