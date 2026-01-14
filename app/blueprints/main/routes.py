@@ -205,6 +205,7 @@ def sponsorship_application():
                 }
             ],
             "metadata": {
+                "application_type": "sponsorship",
                 "support_level": support_level,
                 "support_label": support_label,
                 "application_id": str(application.id),
