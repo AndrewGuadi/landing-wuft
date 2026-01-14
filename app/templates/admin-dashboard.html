@@ -54,7 +54,9 @@
                         ("new", "New"),
                         ("in_review", "In Review"),
                         ("approved", "Approved"),
+                        ("paid", "Paid"),
                         ("rejected", "Rejected"),
+                        ("archived", "Archived Submissions"),
                     ] %}
                     {% for status_value, status_label in status_options %}
                         <a href="{{ url_for('main.admin_dashboard', type=selected_type, status=status_value) }}"
