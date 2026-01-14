@@ -173,7 +173,6 @@ def sponsorship_application():
         if tier is None:
             flash("Please select a valid sponsorship tier.", "error")
             return redirect(url_for("main.sponsorship_application"))
-        logo_filename = save_uploaded_file(form.logo_file.data, "sponsorship")
         application = SponsorshipApplication(
             business_name=form.business_name.data,
             contact_name=form.contact_name.data,
@@ -184,7 +183,6 @@ def sponsorship_application():
             instagram=form.instagram.data,
             linkedin=form.linkedin.data,
             support_level=support_level,
-            logo_filename=logo_filename,
             payment_status="pending",
         )
         db.session.add(application)
