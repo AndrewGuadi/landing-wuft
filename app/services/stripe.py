@@ -5,14 +5,43 @@ from flask import current_app
 from stripe import error as stripe_error
 
 
+def _get_price_map() -> Dict[str, str]:
+    return {
+        "food_vendor": current_app.config.get("STRIPE_PRICE_FOOD_VENDOR", ""),
+        "liability_fee": current_app.config.get("STRIPE_PRICE_LIABILITY_FEE", ""),
+        "sponsor_wish_granter": current_app.config.get("STRIPE_PRICE_SPONSOR_WISH_GRANTER", ""),
+        "sponsor_wonders_wishes": current_app.config.get(
+            "STRIPE_PRICE_SPONSOR_WONDERS_WISHES", ""
+        ),
+        "sponsor_food_truck_champion": current_app.config.get(
+            "STRIPE_PRICE_SPONSOR_FOOD_TRUCK_CHAMPION", ""
+        ),
+        "sponsor_dream_maker": current_app.config.get("STRIPE_PRICE_SPONSOR_DREAM_MAKER", ""),
+        "sponsor_wish_builder": current_app.config.get("STRIPE_PRICE_SPONSOR_WISH_BUILDER", ""),
+        "sponsor_hope_helper": current_app.config.get("STRIPE_PRICE_SPONSOR_HOPE_HELPER", ""),
+        "sponsor_joy_giver": current_app.config.get("STRIPE_PRICE_SPONSOR_JOY_GIVER", ""),
+    }
+
+
 def create_checkout_session(payload: Dict[str, Any]) -> Dict[str, Any]:
     stripe.api_key = current_app.config.get("STRIPE_API_KEY")
     if not stripe.api_key:
         raise ValueError("Stripe API key is not configured")
 
-    line_items = payload.get("line_items")
-    if not isinstance(line_items, list) or not line_items:
-        raise ValueError("line_items must be a non-empty list")
+    product = payload.get("product")
+    if not product or not isinstance(product, str):
+        raise ValueError("product must be a non-empty string")
+
+    price_map = _get_price_map()
+    price_id = price_map.get(product)
+    if not price_id:
+        raise ValueError(f"Stripe price is not configured for product '{product}'")
+
+    quantity = payload.get("quantity", 1)
+    if not isinstance(quantity, int) or quantity < 1:
+        raise ValueError("quantity must be a positive integer")
+
+    line_items = [{"price": price_id, "quantity": quantity}]
 
     mode = payload.get("mode", "payment")
     success_url = payload.get("success_url")
