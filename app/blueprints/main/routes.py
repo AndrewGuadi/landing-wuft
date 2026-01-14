@@ -185,7 +185,10 @@ def sponsorship_application():
         send_placeholder_email("Sponsorship application received", form.email.data)
         payload = {
             "mode": "payment",
-            "success_url": "https://www.wishuponafoodtruck.com/stripe-confirmation",
+            "success_url": (
+                "https://www.wishuponafoodtruck.com/stripe-confirmation"
+                "?session_id={CHECKOUT_SESSION_ID}"
+            ),
             "cancel_url": "https://www.wishuponafoodtruck.com/sponsorship-application",
             "customer_email": form.email.data,
             "line_items": [
@@ -224,6 +227,22 @@ def sponsorship_confirmation():
 
 @main_bp.get("/stripe-confirmation")
 def stripe_confirmation():
+    session_id = request.args.get("session_id", "").strip()
+    if session_id:
+        try:
+            session_result = stripe_service.retrieve_checkout_session(session_id)
+            session = session_result.get("session") or {}
+            payment_status = session.get("payment_status")
+            metadata = session.get("metadata") or {}
+            application_id = metadata.get("application_id")
+            if payment_status == "paid" and application_id:
+                application = SponsorshipApplication.query.get(int(application_id))
+                if application:
+                    application.payment_status = "paid"
+                    application.status = "paid"
+                    db.session.commit()
+        except ValueError as exc:
+            flash(f"Unable to confirm Stripe payment: {exc}", "error")
     return render_template("stripe-confirmation.html")
 
 

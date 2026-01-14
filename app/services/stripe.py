@@ -56,3 +56,19 @@ def handle_webhook(payload: Union[str, bytes], signature: str) -> Dict[str, Any]
         "id": event_payload.get("id"),
         "data": event_payload.get("data"),
     }
+
+
+def retrieve_checkout_session(session_id: str) -> Dict[str, Any]:
+    stripe.api_key = current_app.config.get("STRIPE_API_KEY")
+    if not stripe.api_key:
+        raise ValueError("Stripe API key is not configured")
+    if not session_id:
+        raise ValueError("Stripe session id is required")
+
+    session = stripe.checkout.Session.retrieve(session_id)
+    session_payload = session.to_dict() if hasattr(session, "to_dict") else session
+    return {
+        "status": "retrieved",
+        "provider": "stripe",
+        "session": session_payload,
+    }
