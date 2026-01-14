@@ -6,11 +6,37 @@ from werkzeug.exceptions import BadRequest
 
 from ...services import email_service, pipeline_service, stripe_service, teams_service
 from ...extensions import db
-from ...models import SponsorshipApplication
+from ...models import FoodVendorApplication, SponsorshipApplication
 
 logger = logging.getLogger(__name__)
 
 api_bp = Blueprint("api", __name__, url_prefix="/api")
+
+
+PAID_EVENT_TYPES = {
+    "checkout.session.completed",
+    "checkout.session.async_payment_succeeded",
+}
+
+
+def _mark_application_paid(application_type: str, application_id: int):
+    model_map = {
+        "sponsorship": SponsorshipApplication,
+        "sponsor": SponsorshipApplication,
+        "food_vendor": FoodVendorApplication,
+        "vendor": FoodVendorApplication,
+    }
+    model = model_map.get((application_type or "").lower())
+    if not model:
+        return None
+    application = model.query.get(application_id)
+    if not application:
+        return None
+    if application.payment_status != "paid":
+        application.payment_status = "paid"
+        application.status = "paid"
+        db.session.commit()
+    return application
 
 
 def _get_json_payload():
@@ -48,15 +74,14 @@ def stripe_webhook():
     try:
         payload = request.get_data(as_text=False)
         result = stripe_service.handle_webhook(payload, signature)
-        if result.get("type") == "checkout.session.completed":
-            metadata = (result.get("data") or {}).get("object", {}).get("metadata", {})
+        if result.get("type") in PAID_EVENT_TYPES:
+            session_data = (result.get("data") or {}).get("object", {})
+            metadata = session_data.get("metadata") or {}
+            payment_status = session_data.get("payment_status")
             application_id = metadata.get("application_id")
-            if application_id:
-                application = SponsorshipApplication.query.get(int(application_id))
-                if application:
-                    application.payment_status = "paid"
-                    application.status = "paid"
-                    db.session.commit()
+            application_type = metadata.get("application_type", "sponsorship")
+            if payment_status == "paid" and application_id:
+                _mark_application_paid(application_type, int(application_id))
         return jsonify(result), 200
     except ValueError as exc:
         return _handle_service_error(exc, 400)
