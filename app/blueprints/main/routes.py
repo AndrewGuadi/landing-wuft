@@ -67,12 +67,7 @@ SPONSORSHIP_TIERS = {
         "description": "Event table and social recognition.",
         "product": "sponsor_joy_giver",
     },
-    "test_sponsor": {
-        "name": "Test Sponsor",
-        "amount": 100,
-        "description": "Testing tier for $1 sponsorships.",
-        "product": "sponsor_test",
-    },
+    
 }
 from app.services.uploads import save_uploaded_file
 from app.services.auth_store import authenticate_user

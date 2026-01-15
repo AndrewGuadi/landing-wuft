@@ -38,7 +38,6 @@ class SponsorshipApplicationForm(BaseContactForm):
             ("wish_builder", "Wish Builder Sponsor ($1,000)"),
             ("hope_helper", "Hope Helper Sponsor ($500)"),
             ("joy_giver", "Joy Giver Sponsor ($250)"),
-            ("test_sponsor", "Test Sponsor ($1)"),
         ],
         validators=[DataRequired()],
     )
