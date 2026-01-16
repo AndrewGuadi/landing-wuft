@@ -3,8 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
     <title>{% block title %}Wish Upon a Food Truck Festival{% endblock %}</title>
+    <meta name="title" content="Wish Upon a Food Truck Festival">
+    <meta name="description" content="Join us for the Wish Upon a Food Truck Festival! Enjoy amazing local food while supporting a great cause.">
+    <meta name="keywords" content="food truck, festival, charity, make-a-wish, local food, community event">
+    <meta name="author" content="Wish Upon a Food Truck">
 
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:title" content="Wish Upon a Food Truck Festival">
+    <meta property="og:description" content="Delicious food for a wonderful cause. Support Make-A-Wish at our annual food truck festival!">
+    <meta property="og:image" content="{{ url_for('static', filename='images/white-wuft-maw-logo.webp') }}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.url }}">
+    <meta property="twitter:title" content="Wish Upon a Food Truck Festival">
+    <meta property="twitter:description" content="Delicious food for a wonderful cause. Support Make-A-Wish at our annual food truck festival!">
+    <meta property="twitter:image" content="{{ url_for('static', filename='images/white-wuft-maw-logo.webp') }}">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicons/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicons/favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='favicons/apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='favicons/site.webmanifest') }}">
+
+    <!-- Fonts & CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@700&family=Montserrat:wght@500;600;700;800;900&family=Paytone+One&display=swap" rel="stylesheet">
@@ -60,6 +88,110 @@
                 }, 5000);
             }
         });
+    </script>
+    <script>
+        (() => {
+            const state = {
+                startTime: Date.now(),
+                events: { click: 0, keydown: 0, pointermove: 0, scroll: 0, touchstart: 0, paste: 0 },
+                totalEvents: 0,
+                trustedEvents: 0,
+                focusChanges: 0,
+                visibilityChanges: 0,
+                firstInteractionAt: null,
+                lastInteractionAt: null,
+            };
+            const MAX_COUNT = 500;
+
+            const increment = (key, event) => {
+                if (state.events[key] >= MAX_COUNT) return;
+                state.events[key] += 1;
+                state.totalEvents = Math.min(state.totalEvents + 1, MAX_COUNT * 10);
+                if (event && event.isTrusted) {
+                    state.trustedEvents = Math.min(state.trustedEvents + 1, MAX_COUNT * 10);
+                }
+                state.lastInteractionAt = Date.now();
+                if (!state.firstInteractionAt) state.firstInteractionAt = state.lastInteractionAt;
+            };
+
+            let lastPointerMove = 0;
+            document.addEventListener("click", (event) => increment("click", event));
+            document.addEventListener("keydown", (event) => increment("keydown", event));
+            document.addEventListener("scroll", (event) => increment("scroll", event), { passive: true });
+            document.addEventListener("touchstart", (event) => increment("touchstart", event), { passive: true });
+            document.addEventListener("paste", (event) => increment("paste", event));
+            document.addEventListener("pointermove", (event) => {
+                const now = Date.now();
+                if (now - lastPointerMove > 200) {
+                    lastPointerMove = now;
+                    increment("pointermove", event);
+                }
+            }, { passive: true });
+            document.addEventListener("focusin", () => { state.focusChanges += 1; });
+            document.addEventListener("focusout", () => { state.focusChanges += 1; });
+            document.addEventListener("visibilitychange", () => { state.visibilityChanges += 1; });
+
+            const ensureHidden = (form, name) => {
+                let input = form.querySelector(`input[name="${name}"]`);
+                if (!input) {
+                    input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = name;
+                    form.appendChild(input);
+                }
+                return input;
+            };
+
+            const ensureHoneypot = (form) => {
+                if (form.querySelector('input[name="company_website"]')) return;
+                const honeypot = document.createElement("input");
+                honeypot.type = "text";
+                honeypot.name = "company_website";
+                honeypot.autocomplete = "off";
+                honeypot.tabIndex = -1;
+                honeypot.setAttribute("aria-hidden", "true");
+                honeypot.style.position = "absolute";
+                honeypot.style.left = "-10000px";
+                honeypot.style.top = "auto";
+                honeypot.style.width = "1px";
+                honeypot.style.height = "1px";
+                form.appendChild(honeypot);
+            };
+
+            const buildPayload = () => {
+                const now = Date.now();
+                const duration = now - state.startTime;
+                const trustedRatio = state.totalEvents ? Math.min(state.trustedEvents / state.totalEvents, 1) : 1;
+                return {
+                    version: "self-contained-v3",
+                    started_at: state.startTime,
+                    submitted_at: now,
+                    duration_ms: duration,
+                    events: state.events,
+                    total_events: state.totalEvents,
+                    trusted_event_ratio: Number(trustedRatio.toFixed(2)),
+                    focus_changes: state.focusChanges,
+                    visibility_changes: state.visibilityChanges,
+                    first_interaction_ms: state.firstInteractionAt ? state.firstInteractionAt - state.startTime : null,
+                    last_interaction_ms: state.lastInteractionAt ? state.lastInteractionAt - state.startTime : null,
+                    user_agent: navigator.userAgent,
+                    language: navigator.language,
+                    screen: { width: window.screen.width, height: window.screen.height },
+                    viewport: { width: window.innerWidth, height: window.innerHeight },
+                    page_url: window.location.href,
+                };
+            };
+
+            document.addEventListener("DOMContentLoaded", () => {
+                document.querySelectorAll("form").forEach((form) => {
+                    ensureHoneypot(form);
+                    form.addEventListener("submit", () => {
+                        ensureHidden(form, "recaptcha_version").value = "self-contained-v3";
+                        ensureHidden(form, "recaptcha_payload").value = JSON.stringify(buildPayload());
+                    });
+                });
+            });
+        })();
     </script>
 </body>
 </html>
