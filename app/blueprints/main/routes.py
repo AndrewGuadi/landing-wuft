@@ -23,6 +23,7 @@ from app.forms import (
 from app.models import FoodVendorApplication, LiabilityApplication, SponsorshipApplication
 from app.services.notifications import send_placeholder_email
 from app.services import stripe_service
+from app.services.recaptcha import assess_request
 
 SPONSORSHIP_TIERS = {
     "wish_granter": {
@@ -73,6 +74,19 @@ from app.services.uploads import save_uploaded_file
 from app.services.auth_store import authenticate_user
 
 main_bp = Blueprint("main", __name__)
+
+
+def _handle_recaptcha_failure(response, assessment):
+    current_app.logger.warning(
+        "Recaptcha check failed",
+        extra={
+            "path": request.path,
+            "score": assessment.score,
+            "reasons": assessment.reasons,
+        },
+    )
+    flash("We couldn't verify your submission. Please try again.", "error")
+    return response
 
 
 @main_bp.get("/")
@@ -135,6 +149,13 @@ def health_check():
 @main_bp.route("/food-vendor-application", methods=["GET", "POST"])
 def food_vendor_application():
     form = FoodVendorApplicationForm()
+    if request.method == "POST":
+        assessment = assess_request(request)
+        if not assessment.passed:
+            return _handle_recaptcha_failure(
+                render_template("food-vendor-application.html", form=form),
+                assessment,
+            ), 400
     if form.validate_on_submit():
         logo_filename = save_uploaded_file(form.logo_file.data, "food-vendor")
         insurance_filename = save_uploaded_file(form.insurance_file.data, "food-vendor")
@@ -191,6 +212,13 @@ def food_vendor_application():
 @main_bp.route("/sponsorship-application", methods=["GET", "POST"])
 def sponsorship_application():
     form = SponsorshipApplicationForm()
+    if request.method == "POST":
+        assessment = assess_request(request)
+        if not assessment.passed:
+            return _handle_recaptcha_failure(
+                render_template("sponsorship-application.html", form=form),
+                assessment,
+            ), 400
     if form.validate_on_submit():
         support_level = form.support_level.data
         tier = SPONSORSHIP_TIERS.get(support_level)
@@ -270,6 +298,13 @@ def stripe_confirmation():
 @main_bp.route("/liability-application", methods=["GET", "POST"])
 def liability_application():
     form = LiabilityApplicationForm()
+    if request.method == "POST":
+        assessment = assess_request(request)
+        if not assessment.passed:
+            return _handle_recaptcha_failure(
+                render_template("liability-application.html", form=form),
+                assessment,
+            ), 400
     if form.validate_on_submit():
         application = LiabilityApplication(
             applicant_signature=form.applicant_signature.data,
@@ -295,6 +330,12 @@ def admin_login():
         return redirect(url_for("main.admin_dashboard"))
 
     if request.method == "POST":
+        assessment = assess_request(request, is_privileged=True)
+        if not assessment.passed:
+            return _handle_recaptcha_failure(
+                render_template("admin-login.html"),
+                assessment,
+            ), 400
         email = request.form.get("email", "").strip()
         password = request.form.get("password", "")
         if not email or not password:
@@ -395,6 +436,18 @@ def admin_upload_download(category: str, filename: str):
 @main_bp.post("/admin/status/<string:application_type>/<int:application_id>")
 @login_required
 def admin_update_status(application_type: str, application_id: int):
+    assessment = assess_request(request, is_privileged=True)
+    if not assessment.passed:
+        return _handle_recaptcha_failure(
+            redirect(
+                url_for(
+                    "main.admin_dashboard",
+                    type=request.args.get("type", "all"),
+                    status=request.args.get("status", "all"),
+                )
+            ),
+            assessment,
+        )
     status = request.form.get("status", "new")
     model_map = {
         "sponsor": SponsorshipApplication,
