@@ -61,5 +61,145 @@
             }
         });
     </script>
+    <script>
+        (() => {
+            const state = {
+                startTime: Date.now(),
+                events: {
+                    click: 0,
+                    keydown: 0,
+                    pointermove: 0,
+                    scroll: 0,
+                    touchstart: 0,
+                    paste: 0,
+                },
+                totalEvents: 0,
+                trustedEvents: 0,
+                focusChanges: 0,
+                visibilityChanges: 0,
+                firstInteractionAt: null,
+                lastInteractionAt: null,
+            };
+            const MAX_COUNT = 500;
+
+            const increment = (key, event) => {
+                if (state.events[key] >= MAX_COUNT) {
+                    return;
+                }
+                state.events[key] += 1;
+                state.totalEvents = Math.min(state.totalEvents + 1, MAX_COUNT * 10);
+                if (event && event.isTrusted) {
+                    state.trustedEvents = Math.min(state.trustedEvents + 1, MAX_COUNT * 10);
+                }
+                state.lastInteractionAt = Date.now();
+                if (!state.firstInteractionAt) {
+                    state.firstInteractionAt = state.lastInteractionAt;
+                }
+            };
+
+            let lastPointerMove = 0;
+            document.addEventListener("click", (event) => increment("click", event));
+            document.addEventListener("keydown", (event) => increment("keydown", event));
+            document.addEventListener("scroll", (event) => increment("scroll", event), { passive: true });
+            document.addEventListener("touchstart", (event) => increment("touchstart", event), { passive: true });
+            document.addEventListener("paste", (event) => increment("paste", event));
+            document.addEventListener("pointermove", (event) => {
+                const now = Date.now();
+                if (now - lastPointerMove > 200) {
+                    lastPointerMove = now;
+                    increment("pointermove", event);
+                }
+            }, { passive: true });
+            document.addEventListener("focusin", () => { state.focusChanges += 1; });
+            document.addEventListener("focusout", () => { state.focusChanges += 1; });
+            document.addEventListener("visibilitychange", () => { state.visibilityChanges += 1; });
+
+            const ensureHidden = (form, name) => {
+                let input = form.querySelector(`input[name="${name}"]`);
+                if (!input) {
+                    input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = name;
+                    form.appendChild(input);
+                }
+                return input;
+            };
+
+            const ensureHoneypot = (form) => {
+                if (form.querySelector('input[name="company_website"]')) {
+                    return;
+                }
+                const honeypot = document.createElement("input");
+                honeypot.type = "text";
+                honeypot.name = "company_website";
+                honeypot.autocomplete = "off";
+                honeypot.tabIndex = -1;
+                honeypot.setAttribute("aria-hidden", "true");
+                honeypot.style.position = "absolute";
+                honeypot.style.left = "-10000px";
+                honeypot.style.top = "auto";
+                honeypot.style.width = "1px";
+                honeypot.style.height = "1px";
+                form.appendChild(honeypot);
+            };
+
+            const buildPayload = () => {
+                const now = Date.now();
+                const duration = now - state.startTime;
+                const trustedRatio = state.totalEvents
+                    ? Math.min(state.trustedEvents / state.totalEvents, 1)
+                    : 1;
+                return {
+                    version: "self-contained-v3",
+                    started_at: state.startTime,
+                    submitted_at: now,
+                    duration_ms: duration,
+                    events: state.events,
+                    total_events: state.totalEvents,
+                    trusted_event_ratio: Number(trustedRatio.toFixed(2)),
+                    focus_changes: state.focusChanges,
+                    visibility_changes: state.visibilityChanges,
+                    first_interaction_ms: state.firstInteractionAt
+                        ? state.firstInteractionAt - state.startTime
+                        : null,
+                    last_interaction_ms: state.lastInteractionAt
+                        ? state.lastInteractionAt - state.startTime
+                        : null,
+                    user_agent: navigator.userAgent,
+                    language: navigator.language,
+                    languages: navigator.languages,
+                    platform: navigator.platform,
+                    timezone_offset: new Date().getTimezoneOffset(),
+                    screen: {
+                        width: window.screen.width,
+                        height: window.screen.height,
+                    },
+                    viewport: {
+                        width: window.innerWidth,
+                        height: window.innerHeight,
+                    },
+                    color_depth: window.screen.colorDepth,
+                    device_memory: navigator.deviceMemory,
+                    hardware_concurrency: navigator.hardwareConcurrency,
+                    touch_support: "ontouchstart" in window,
+                    webdriver: navigator.webdriver,
+                    cookies_enabled: navigator.cookieEnabled,
+                    do_not_track: navigator.doNotTrack,
+                    referrer: document.referrer,
+                    page_url: window.location.href,
+                };
+            };
+
+            document.addEventListener("DOMContentLoaded", () => {
+                document.querySelectorAll("form").forEach((form) => {
+                    ensureHoneypot(form);
+                    form.addEventListener("submit", () => {
+                        ensureHidden(form, "recaptcha_version").value = "self-contained-v3";
+                        ensureHidden(form, "recaptcha_payload").value = JSON.stringify(buildPayload());
+                    });
+                });
+            });
+        })();
+    </script>
 </body>
 </html>
